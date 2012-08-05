@@ -7,13 +7,13 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.Common;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
 
 
-namespace Raccent.Ftp.FtpService
+namespace SuperSocket.Ftp.FtpService
 {
     class DataConnection
     {

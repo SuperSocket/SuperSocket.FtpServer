@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Raccent.Ftp.FtpCommon;
+using SuperSocket.Ftp.FtpCommon;
 using SuperSocket.Common;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class REST : StringCommandBase<FtpSession>
     {
@@ -21,7 +21,7 @@ namespace Raccent.Ftp.FtpService.Command
 
             session.Context.Offset = offset;
 
-            session.SendResponse(Resource.RestartOk_350, offset);
+            session.Send(Resource.RestartOk_350, offset);
         }
 
         #endregion

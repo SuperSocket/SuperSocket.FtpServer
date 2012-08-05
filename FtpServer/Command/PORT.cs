@@ -4,7 +4,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class PORT : StringCommandBase<FtpSession>
     {
@@ -36,12 +36,12 @@ namespace Raccent.Ftp.FtpService.Command
             if (DataConnection.TrySocketPort(session, port))
             {
                 session.CurrentDataConnectionPort = port;
-                session.SendResponse(Resource.PortOk_220);
+                session.Send(Resource.PortOk_220);
                 return;
             }
             else
             {
-                session.SendResponse(Resource.PortInvalid_552);
+                session.Send(Resource.PortInvalid_552);
                 return;
             }
         }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.Common;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class STOR : StringCommandBase<FtpSession>
     {
@@ -29,7 +29,7 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (!session.Context.User.IncreaseConnection())
             {
-                session.SendResponse(Resource.ReachedLoginLimit_421);
+                session.Send(Resource.ReachedLoginLimit_421);
                 return;
             }
 
@@ -41,21 +41,21 @@ namespace Raccent.Ftp.FtpService.Command
 
                 try
                 {
-                    session.SendResponse(Resource.DataConnectionAccepted_150);
+                    session.Send(Resource.DataConnectionAccepted_150);
 
                     if (session.AppServer.FtpServiceProvider.StoreFile(session.Context, filename, stream))
-                        session.SendResponse(Resource.DataTransferComplete_226);
+                        session.Send(Resource.DataTransferComplete_226);
                     else
-                        session.SendResponse(session.Context.Message);
+                        session.Send(session.Context.Message);
                 }
                 catch (SocketException)
                 {
-                    session.SendResponse(Resource.DataConnectionError_426);
+                    session.Send(Resource.DataConnectionError_426);
                 }
                 catch (Exception e)
                 {
                     session.Logger.Error(e);
-                    session.SendResponse(Resource.OuputFileError_551);
+                    session.Send(Resource.OuputFileError_551);
                 }
                 finally
                 {

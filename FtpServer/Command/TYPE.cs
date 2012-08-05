@@ -4,7 +4,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class TYPE : StringCommandBase<FtpSession>
     {
@@ -40,7 +40,7 @@ namespace Raccent.Ftp.FtpService.Command
                     return;
             }
 
-            session.SendResponse(Resource.TypeOk_220, typeCode);
+            session.Send(Resource.TypeOk_220, typeCode);
         }
 
         #endregion

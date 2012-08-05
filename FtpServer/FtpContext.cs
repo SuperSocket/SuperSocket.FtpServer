@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Text;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase;
 
 
-namespace Raccent.Ftp.FtpService
+namespace SuperSocket.Ftp.FtpService
 {
     public class FtpContext
     {
@@ -108,6 +108,12 @@ namespace Raccent.Ftp.FtpService
         public void SetError(string error)
         {
             Message = error;
+            Status = FtpStatus.Error;
+        }
+
+        public void SetError(string error, params object[] arguments)
+        {
+            Message = string.Format(error, arguments);
             Status = FtpStatus.Error;
         }
     }

@@ -5,7 +5,7 @@ using System.Resources;
 using System.Globalization;
 using System.Reflection;
 
-namespace Raccent.Ftp.FtpCommon
+namespace SuperSocket.Ftp.FtpCommon
 {
     public static class GlobalResources
     {

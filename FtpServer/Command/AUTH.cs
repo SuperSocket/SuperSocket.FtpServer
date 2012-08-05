@@ -5,7 +5,7 @@ using SuperSocket.SocketBase.Command;
 using System.Security.Authentication;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class AUTH : StringCommandBase<FtpSession>
     {
@@ -34,7 +34,7 @@ namespace Raccent.Ftp.FtpService.Command
                     return;
             }
 
-            session.SendResponse(Resource.AuthOk_234, ssl);
+            session.Send(Resource.AuthOk_234, ssl);
 
             session.AppServer.ResetSessionSecurity(session, session.SecureProtocol);
         }

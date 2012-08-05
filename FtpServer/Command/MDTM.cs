@@ -6,7 +6,7 @@ using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class MDTM : StringCommandBase<FtpSession>
     {
@@ -26,11 +26,11 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (session.Context.Status == FtpStatus.Error)
             {
-                session.SendResponse(session.Context.Message);
+                session.Send(session.Context.Message);
             }
             else
             {
-                session.SendResponse(string.Format(Resource.FileOk_213, mdfTime.ToString("yyyyMMddhhmmss")));
+                session.Send(string.Format(Resource.FileOk_213, mdfTime.ToString("yyyyMMddhhmmss")));
             }
         }
 

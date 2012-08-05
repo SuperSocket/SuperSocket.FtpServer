@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Raccent.Ftp.FtpService.Storage
+namespace SuperSocket.Ftp.FtpService.Storage
 {
     public enum RenameResult
     {

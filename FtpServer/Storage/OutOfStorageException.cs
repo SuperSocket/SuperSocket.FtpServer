@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace Raccent.Ftp.FtpService.Storage
+namespace SuperSocket.Ftp.FtpService.Storage
 {
     /// <summary>
     /// The exception should be throw when a user's storage is outof memory

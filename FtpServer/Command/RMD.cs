@@ -4,7 +4,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class RMD : StringCommandBase<FtpSession>
     {
@@ -25,11 +25,11 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (session.AppServer.FtpServiceProvider.RemoveFolder(session.Context, foldername))
             {
-                session.SendResponse(Resource.RemoveOk_250, session.Context.CurrentPath + "/" + foldername);
+                session.Send(Resource.RemoveOk_250, session.Context.CurrentPath + "/" + foldername);
             }
             else
             {
-                session.SendResponse(session.Context.Message);
+                session.Send(session.Context.Message);
             }
         }
 

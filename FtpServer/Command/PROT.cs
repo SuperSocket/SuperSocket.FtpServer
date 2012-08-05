@@ -5,7 +5,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class PROT : StringCommandBase<FtpSession>
     {
@@ -18,7 +18,7 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (session.SecureProtocol == SslProtocols.None)
             {
-                session.SendResponse(Resource.ProtDisabled_431);
+                session.Send(Resource.ProtDisabled_431);
                 return;
             }
 
@@ -41,12 +41,12 @@ namespace Raccent.Ftp.FtpService.Command
                     session.Context.DataSecureProtocol = session.SecureProtocol;
                     break;
                 default:
-                    session.SendResponse(Resource.ProtectionLevelUnknow_504);
+                    session.Send(Resource.ProtectionLevelUnknow_504);
                     return;
             }
 
             session.Context.ResetState();
-            session.SendResponse(Resource.ProtOk_200);
+            session.Send(Resource.ProtOk_200);
         }
 
         #endregion

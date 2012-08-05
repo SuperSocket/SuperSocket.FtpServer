@@ -4,7 +4,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class USER : StringCommandBase<FtpSession>
     {
@@ -14,7 +14,7 @@ namespace Raccent.Ftp.FtpService.Command
         {
             if (session.Logged)
             {
-                session.SendResponse(Resource.AlreadyLoggedIn_230);
+                session.Send(Resource.AlreadyLoggedIn_230);
                 return;
             }
 
@@ -27,13 +27,13 @@ namespace Raccent.Ftp.FtpService.Command
             }
             else if (string.Compare(username, "anonymous", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                session.SendResponse(Resource.RequirePasswor_331, username);
+                session.Send(Resource.RequirePasswor_331, username);
                 session.Context.UserName = username;
                 return;
             }
             else
             {
-                session.SendResponse(Resource.RequirePasswor_331, username);
+                session.Send(Resource.RequirePasswor_331, username);
                 session.Context.UserName = username;
                 return;
             }

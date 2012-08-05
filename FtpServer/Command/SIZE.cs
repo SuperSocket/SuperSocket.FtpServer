@@ -7,7 +7,7 @@ using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class SIZE : StringCommandBase<FtpSession>
     {
@@ -29,9 +29,9 @@ namespace Raccent.Ftp.FtpService.Command
             long size = session.AppServer.FtpServiceProvider.GetFileSize(session.Context, filename);
 
             if (session.Context.Status == FtpStatus.Error)
-                session.SendResponse(session.Context.Message);
+                session.Send(session.Context.Message);
             else
-                session.SendResponse(Resource.SizeOk_213, size);
+                session.Send(Resource.SizeOk_213, size);
         }
 
         #endregion

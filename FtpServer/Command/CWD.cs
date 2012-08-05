@@ -5,7 +5,7 @@ using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class CWD : StringCommandBase<FtpSession>
     {
@@ -30,14 +30,14 @@ namespace Raccent.Ftp.FtpService.Command
             {
                 session.Context.CurrentPath = path;
                 session.Context.CurrentFolderID = folderID;
-                session.SendResponse(Resource.ChangeWorkDirOk_250, path);
+                session.Send(Resource.ChangeWorkDirOk_250, path);
             }
             else
             {
                 if (session.Context.Status == FtpStatus.Error)
-                    session.SendResponse(session.Context.Message);
+                    session.Send(session.Context.Message);
                 else
-                    session.SendResponse(Resource.NotFound_550);
+                    session.Send(Resource.NotFound_550);
             }
         }
 

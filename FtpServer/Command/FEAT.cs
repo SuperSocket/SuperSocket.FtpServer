@@ -4,7 +4,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class FEAT : StringCommandBase<FtpSession>
     {
@@ -15,7 +15,7 @@ namespace Raccent.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
-            session.SendResponse(Resource.FeaturesOk_221);
+            session.Send(Resource.FeaturesOk_221);
         }
 
         #endregion

@@ -4,7 +4,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class ABOR : StringCommandBase<FtpSession>
     {
@@ -15,7 +15,7 @@ namespace Raccent.Ftp.FtpService.Command
             session.Context.ResetState();
             //Close current data connection?
             session.CloseDataConnection(session.CurrentDataConnection);
-            session.SendResponse(Resource.AbortOk_226);
+            session.Send(Resource.AbortOk_226);
         }
 
         #endregion

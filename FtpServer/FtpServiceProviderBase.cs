@@ -4,14 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Raccent.Ftp.FtpCommon;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpCommon;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.Common;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
 using System.Resources;
 
-namespace Raccent.Ftp.FtpService
+namespace SuperSocket.Ftp.FtpService
 {
     public abstract class FtpServiceProviderBase
     {
@@ -26,7 +26,7 @@ namespace Raccent.Ftp.FtpService
 
         protected ResourceManager Resource { get; private set; }
 
-        public bool Init(FtpServer server, IServerConfig config)
+        public virtual bool Init(FtpServer server, IServerConfig config)
         {
             AppServer = server;
             Resource = server.Resource;
@@ -624,7 +624,7 @@ namespace Raccent.Ftp.FtpService
             if (!virtualPath.StartsWith("/"))
                 virtualPath = Path.Combine(context.CurrentPath, virtualPath);
 
-            virtualPath = Raccent.Ftp.FtpCommon.StringUtil.ReverseSlash(virtualPath, '/');
+            virtualPath = SuperSocket.Ftp.FtpCommon.StringUtil.ReverseSlash(virtualPath, '/');
             virtualPath = virtualPath.TrimStart('\\');
 
             return GetStoragePathInternal(context, virtualPath);

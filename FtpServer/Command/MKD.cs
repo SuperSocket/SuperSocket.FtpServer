@@ -5,7 +5,7 @@ using SuperSocket.Common;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class MKD : StringCommandBase<FtpSession>
     {
@@ -26,11 +26,11 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (session.AppServer.FtpServiceProvider.CreateFolder(session.Context, foldername))
             {
-                session.SendResponse(Resource.MakeDirOk_250, session.Context.CurrentPath + "/" + foldername);
+                session.Send(Resource.MakeDirOk_250, session.Context.CurrentPath + "/" + foldername);
             }
             else
             {
-                session.SendResponse(session.Context.Message);
+                session.Send(session.Context.Message);
             }
         }
 

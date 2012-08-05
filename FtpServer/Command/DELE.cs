@@ -5,7 +5,7 @@ using SuperSocket.SocketBase.Command;
 using SuperSocket.Common;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class DELE : StringCommandBase<FtpSession>
     {
@@ -26,11 +26,11 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (session.AppServer.FtpServiceProvider.DeleteFile(session.Context, filename))
             {
-                session.SendResponse(Resource.DeleteOk_250);
+                session.Send(Resource.DeleteOk_250);
             }
             else
             {
-                session.SendResponse(session.Context.Message);
+                session.Send(session.Context.Message);
             }
         }
 

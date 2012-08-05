@@ -8,8 +8,8 @@
     <ProjectGuid>{E10F5B1A-7357-4024-AC75-FFD8AA12EDEF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Raccent.Ftp.FtpService</RootNamespace>
-    <AssemblyName>Raccent.Ftp.FtpService</AssemblyName>
+    <RootNamespace>SuperSocket.Ftp.FtpService</RootNamespace>
+    <AssemblyName>SuperSocket.Ftp.FtpService</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -54,25 +54,18 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SuperSocket.Common">
-      <HintPath>..\Reference\SuperSocket.Common.dll</HintPath>
+    <Reference Include="SuperSocket.Common, Version=1.5.0.0, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference\SuperSocket\Net40\Debug\SuperSocket.Common.dll</HintPath>
     </Reference>
-    <Reference Include="SuperSocket.SocketBase">
-      <HintPath>..\Reference\SuperSocket.SocketBase.dll</HintPath>
+    <Reference Include="SuperSocket.SocketBase, Version=1.5.0.0, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference\SuperSocket\Net40\Debug\SuperSocket.SocketBase.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.IdentityModel">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.ServiceModel">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -116,10 +109,6 @@
     <Compile Include="Command\SYST.cs" />
     <Compile Include="Command\TYPE.cs" />
     <Compile Include="Command\USER.cs" />
-    <Compile Include="Console\FtpManager.cs" />
-    <Compile Include="Console\IServerManager.cs" />
-    <Compile Include="Console\IStatusReporter.cs" />
-    <Compile Include="Console\IUserManager.cs" />
     <Compile Include="CreateUserResult.cs" />
     <Compile Include="DataConnection.cs" />
     <Compile Include="FtpContext.cs" />

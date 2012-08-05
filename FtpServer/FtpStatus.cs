@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Raccent.Ftp.FtpService
+namespace SuperSocket.Ftp.FtpService
 {
     public enum FtpStatus
     {

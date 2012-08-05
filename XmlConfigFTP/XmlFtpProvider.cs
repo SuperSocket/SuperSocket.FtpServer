@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Raccent.Ftp.FtpCommon;
-using Raccent.Ftp.FtpService;
 using SuperSocket.Common;
+using SuperSocket.Ftp.FtpCommon;
+using SuperSocket.Ftp.FtpService;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
-using System.IO;
 
-namespace Raccent.Ftp.XmlConfigFTP
+namespace SuperSocket.Ftp.XmlConfigFTP
 {
     public class XmlFtpProvider : FtpServiceProviderBase
     {
@@ -18,7 +18,7 @@ namespace Raccent.Ftp.XmlConfigFTP
 
         private Dictionary<string, FtpUser> m_UserDict = new Dictionary<string, FtpUser>(StringComparer.OrdinalIgnoreCase);
         
-        public override bool Init(IAppServer<FtpSession> server, IServerConfig config)
+        public override bool Init(FtpServer server, IServerConfig config)
         {
             if (!base.Init(server, config))
                 return false;
@@ -27,7 +27,7 @@ namespace Raccent.Ftp.XmlConfigFTP
 
             if (string.IsNullOrEmpty(m_UserSettingFile))
             {
-                server.Logger.LogError("No user setting file defined!");
+                server.Logger.Error("No user setting file defined!");
                 return false;
             }
 

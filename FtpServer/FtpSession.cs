@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Authentication;
 using System.Text;
-using Raccent.Ftp.FtpService.Membership;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Membership;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Command;
 
-namespace Raccent.Ftp.FtpService
+namespace SuperSocket.Ftp.FtpService
 {
     public class FtpSession : AppSession<FtpSession>
     {
@@ -64,14 +64,15 @@ namespace Raccent.Ftp.FtpService
             }
         }
 
-        public override void StartSession()
+        protected override void OnSessionStarted()
         {
-            SendResponse(Resource.FTP_Welcome);
+            Send(Resource.FTP_Welcome);
+            base.OnSessionStarted();
         }
 
         public void SendParameterError()
         {
-            SendResponse(Resource.InvalidArguments_501);
+            Send(Resource.InvalidArguments_501);
         }
 
         private List<DataConnection> m_DataConnections = new List<DataConnection>();
@@ -100,7 +101,7 @@ namespace Raccent.Ftp.FtpService
 
         public override void HandleException(Exception e)
         {
-            SendResponse(Resource.UnknownError_450);
+            Send(Resource.UnknownError_450);
         }
     }
 }

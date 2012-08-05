@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Raccent.Ftp.FtpService.Membership
+namespace SuperSocket.Ftp.FtpService.Membership
 {
     /// <summary>
     /// Password format

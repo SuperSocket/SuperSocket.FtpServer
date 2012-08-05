@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SuperSocket.SocketBase.Command;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class RNFR : StringCommandBase<FtpSession>
     {
@@ -30,17 +30,17 @@ namespace Raccent.Ftp.FtpService.Command
             {
                 session.Context.RenameFor = filepath;
                 session.Context.RenameItemType = ItemType.File;
-                session.SendResponse(Resource.RenameForOk_350);
+                session.Send(Resource.RenameForOk_350);
             }
             else if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, filepath, out folderID))
             {
                 session.Context.RenameFor = filepath;
                 session.Context.RenameItemType = ItemType.Folder;
-                session.SendResponse(Resource.RenameForOk_350);
+                session.Send(Resource.RenameForOk_350);
             }
             else
             {
-                session.SendResponse(session.Context.Message);
+                session.Send(session.Context.Message);
             }
         }
 

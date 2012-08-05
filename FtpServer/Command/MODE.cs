@@ -4,7 +4,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class MODE : StringCommandBase<FtpSession>
     {
@@ -12,7 +12,7 @@ namespace Raccent.Ftp.FtpService.Command
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
-            session.SendResponse(Resource.NotImplement_502);
+            session.Send(Resource.NotImplement_502);
         }
 
         #endregion

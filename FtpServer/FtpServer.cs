@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Claims;
 using System.Net;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Security;
-using Raccent.Ftp.FtpService.Console;
-using Raccent.Ftp.FtpService.Membership;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Membership;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.Common;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
@@ -17,7 +11,7 @@ using System.Reflection;
 using SuperSocket.SocketBase.Protocol;
 using System.Resources;
 
-namespace Raccent.Ftp.FtpService
+namespace SuperSocket.Ftp.FtpService
 {
     public class FtpServer : AppServer<FtpSession>
     {
@@ -37,34 +31,13 @@ namespace Raccent.Ftp.FtpService
                 m_DictOnlineUser.Clear();
         }
 
-        public override bool Setup(IRootConfig rootConfig, IServerConfig config, ISocketServerFactory socketServerFactory, IRequestFilterFactory<StringRequestInfo> requestFilterFactory)
-        {
-            return base.Setup(rootConfig, config, socketServerFactory, requestFilterFactory);
-        }
-
         public FtpServiceProviderBase FtpServiceProvider { get; private set; }
 
-        public override bool IsReady
+        protected override bool Setup(IRootConfig rootConfig, IServerConfig config)
         {
-            get { return (FtpServiceProvider != null && FtpServiceProvider != null); }
+            return true;
         }
 
-        //protected override ConsoleHostInfo ConsoleHostInfo
-        //{
-        //    get
-        //    {
-        //        return new ConsoleHostInfo
-        //        {
-        //            ServiceInstance = new FtpManager(this),
-        //            ServiceContracts = new Type[]
-        //            {
-        //                typeof(IUserManager),
-        //                typeof(IServerManager),
-        //                typeof(IStatusReporter)
-        //            }
-        //        };
-        //    }
-        //}
 
         private object m_SyncRoot = new object();
 
@@ -121,12 +94,11 @@ namespace Raccent.Ftp.FtpService
             }
         }
 
-        protected override void OnAppSessionClosed(object sender, AppSessionClosedEventArgs<FtpSession> e)
+        protected override void OnSessionClosed(FtpSession session, CloseReason reason)
         {
-            var session = e.Session;
+            base.OnSessionClosed(session, reason);
             this.FtpServiceProvider.ClearTempDirectory(session.Context);
             this.RemoveOnlineUser(session, session.Context.User);
-            base.OnAppSessionClosed(sender, e);
         }
     }
 }

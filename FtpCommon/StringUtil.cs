@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Configuration;
 
-namespace Raccent.Ftp.FtpCommon
+namespace SuperSocket.Ftp.FtpCommon
 {
     public static class StringUtil
     {

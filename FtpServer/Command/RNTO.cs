@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.Common;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class RNTO : StringCommandBase<FtpSession>
     {
@@ -29,7 +29,7 @@ namespace Raccent.Ftp.FtpService.Command
             {
                 if (!session.AppServer.FtpServiceProvider.RenameFile(session.Context, session.Context.RenameFor, newfileName))
                 {
-                    session.SendResponse(session.Context.Message);
+                    session.Send(session.Context.Message);
                     return;
                 }
             }
@@ -37,12 +37,12 @@ namespace Raccent.Ftp.FtpService.Command
             {
                 if (!session.AppServer.FtpServiceProvider.RenameFolder(session.Context, session.Context.RenameFor, newfileName))
                 {
-                    session.SendResponse(session.Context.Message);
+                    session.Send(session.Context.Message);
                     return;
                 }
             }
 
-            session.SendResponse(Resource.RenameToOk_250);
+            session.Send(Resource.RenameToOk_250);
         }
 
         #endregion

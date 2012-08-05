@@ -8,8 +8,8 @@
     <ProjectGuid>{81BC81F9-9A57-449E-AF6E-FAECA8740701}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Raccent.Ftp.FtpCommon</RootNamespace>
-    <AssemblyName>Raccent.Ftp.FtpCommon</AssemblyName>
+    <RootNamespace>SuperSocket.Ftp.FtpCommon</RootNamespace>
+    <AssemblyName>SuperSocket.Ftp.FtpCommon</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using SuperSocket.SocketBase;
 
 
-namespace Raccent.Ftp.FtpService
+namespace SuperSocket.Ftp.FtpService
 {
     public class FtpUser
     {
@@ -17,8 +17,6 @@ namespace Raccent.Ftp.FtpService
         public string UserName { get; set; }
 
         public string Password { get; set; }
-
-        private long m_MaxSpace;
 
         public long MaxSpace { get; set; }
 
@@ -34,14 +32,9 @@ namespace Raccent.Ftp.FtpService
             set { m_MaxConnections = value; }
         }
 
-        private int m_MaxUploadSpeed;
-
         public int MaxUploadSpeed { get; set; }
 
-        private int m_MaxDownloadSpeed;
-
         public int MaxDownloadSpeed { get; set; }
-
 
         public string Root { get; set; }
 

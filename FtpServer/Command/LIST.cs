@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Raccent.Ftp.FtpService.Storage;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class LIST : StringCommandBase<FtpSession>
     {
@@ -22,13 +22,13 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (session.Context.Status == FtpStatus.Error)
             {
-                session.SendResponse(session.Context.Message);
+                session.Send(session.Context.Message);
                 return;
             }
 
             if (!session.Context.User.IncreaseConnection())
             {
-                session.SendResponse(Resource.ReachedLoginLimit_421);
+                session.Send(Resource.ReachedLoginLimit_421);
                 return;
             }
 
@@ -36,7 +36,7 @@ namespace Raccent.Ftp.FtpService.Command
 
             if (dataConn.RunDataConnection())
             {
-                session.SendResponse(Resource.DataConnectionAccepted_150);
+                session.Send(Resource.DataConnectionAccepted_150);
 
                 try
                 {
@@ -44,18 +44,18 @@ namespace Raccent.Ftp.FtpService.Command
                 }
                 catch (Exception)
                 {
-                    session.SendResponse(Resource.DataConnectionCannotOpen_420);
+                    session.Send(Resource.DataConnectionCannotOpen_420);
                     return;
                 }
 
                 session.Context.User.DecreaseConnection();
                 session.CloseDataConnection(dataConn);
-                session.SendResponse(Resource.DataTransferComplete_226);
+                session.Send(Resource.DataTransferComplete_226);
             }
             else
             {
                 session.Context.User.DecreaseConnection();
-                session.SendResponse(Resource.DataConnectionCannotOpen_420);
+                session.Send(Resource.DataConnectionCannotOpen_420);
             }
         }
 

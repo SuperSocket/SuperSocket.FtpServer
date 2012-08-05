@@ -5,7 +5,7 @@ using System.Text;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 
-namespace Raccent.Ftp.FtpService.Command
+namespace SuperSocket.Ftp.FtpService.Command
 {
     public class PASV : StringCommandBase<FtpSession>
     {
@@ -22,11 +22,11 @@ namespace Raccent.Ftp.FtpService.Command
             {
                 string address = ((IPEndPoint)session.LocalEndPoint).Address.ToString().Replace('.', ',') + "," + (port >> 8) + "," + (port & 0xFF);
                 session.CurrentDataConnectionPort = port;
-                session.SendResponse(Resource.PassiveEnter_227, address);
+                session.Send(Resource.PassiveEnter_227, address);
             }
             else
             {
-                session.SendResponse(Resource.DataConnectionCannotOpen_420);
+                session.Send(Resource.DataConnectionCannotOpen_420);
             }
         }
 

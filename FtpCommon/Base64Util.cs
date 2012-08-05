@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace Raccent.Ftp.FtpCommon
+namespace SuperSocket.Ftp.FtpCommon
 {
     public class Base64Util
     {
