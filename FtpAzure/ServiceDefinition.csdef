@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="FtpAzure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WorkerRole name="FtpServerRole">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
+    </Imports>
+    <Endpoints>
+      <InputEndpoint name="RaccentFTPEndpoint" protocol="tcp" port="21" />
+      <InputEndpoint name="FTPDataPort0" protocol="tcp" port="4000" />
+      <InputEndpoint name="FTPDataPort1" protocol="tcp" port="4001" />
+      <InputEndpoint name="FTPDataPort2" protocol="tcp" port="4002" />
+      <InputEndpoint name="FTPDataPort3" protocol="tcp" port="4003" />
+    </Endpoints>
+  </WorkerRole>
+</ServiceDefinition>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="FtpAzure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*">
+  <Role name="FtpServerRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="kerryjiang" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCED7Phdky4h6sQBEDWLm+Oy8wDQYJKoZIhvcNAQEBBQAEggEALjDrDNmuxtlLbh4OFxfCkqI/ymm9WcFs3chocg+uhFzgpGwiYkyg+jJuytl6E8Z4woF1Ebxt504LH7OayckpLOyxi1uyoM4zbzASB04UNXjg9LYQ/xp2vZ+X4o6Tu3jRgheIa19hNN2yFFZPWcvPhgV3fyRmoStAjl/nektn51v87wvmdW/0b6FOi8anfqYCpxfdtG5qlXbL1m8vqdaHOYvNuVEUaQifFfuMWGWukYpMpDHIovXtLTkyfXJrAXocOnOQovNniHPwV30Laxal5ZYPH2Wf/MDmTvXe7PGZZhGNoQJZkvpkSrB3xmedyHx96I3y8n1hhomwgZAEDylmgDAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECJosjJT2UzdWgBA4l7uDF7nutMh8eHfI7tgQ" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2011-05-31T23:59:59.0000000+08:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="4F85829DC5BB1C498D0AF11423EE1A3555A45487" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>
