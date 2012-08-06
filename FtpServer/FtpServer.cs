@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Linq;
+using System.Resources;
+using SuperSocket.Common;
 using SuperSocket.Ftp.FtpService.Membership;
 using SuperSocket.Ftp.FtpService.Storage;
-using SuperSocket.Common;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
-using System.IO;
-using System.Reflection;
 using SuperSocket.SocketBase.Protocol;
-using System.Resources;
 
 namespace SuperSocket.Ftp.FtpService
 {
@@ -35,7 +36,68 @@ namespace SuperSocket.Ftp.FtpService
 
         protected override bool Setup(IRootConfig rootConfig, IServerConfig config)
         {
-            return true;
+            var providerType = config.Options.GetValue("ftpProviderType");
+            var providerTypeName = config.Options.GetValue("ftpProviderName");
+
+            if (string.IsNullOrEmpty(providerType) && string.IsNullOrEmpty(providerTypeName))
+            {
+                if (Logger.IsErrorEnabled)
+                    Logger.Error("Either ftpProviderType or ftpProviderName is required!");
+
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(providerType) && !string.IsNullOrEmpty(providerTypeName))
+            {
+                if (Logger.IsErrorEnabled)
+                    Logger.Error("You cannot have both ftpProviderType and ftpProviderName configured!");
+
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(providerTypeName))
+            {
+                var providers = rootConfig.GetChildConfig<TypeProviderCollection>("ftpProviders");
+
+                if (providers == null || providers.Count == 0)
+                {
+                    if (Logger.IsErrorEnabled)
+                        Logger.Error("Configuration node ftpProviders is required!");
+
+                    return false;
+                }
+
+                var typeProvider = providers.OfType<TypeProvider>().FirstOrDefault(p =>
+                        providerTypeName.Equals(p.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (typeProvider == null)
+                {
+                    if (Logger.IsErrorEnabled)
+                        Logger.ErrorFormat("The ftp provider {0} was not found!", providerTypeName);
+
+                    return false;
+                }
+
+                providerType = typeProvider.Type;
+            }
+
+
+            Type realProviderType;
+
+            try
+            {
+                realProviderType = Type.GetType(providerType, true);
+                FtpServiceProvider = (FtpServiceProviderBase)Activator.CreateInstance(realProviderType);
+            }
+            catch (Exception e)
+            {
+                if (Logger.IsErrorEnabled)
+                    Logger.Error(e);
+
+                return false;
+            }
+
+            return FtpServiceProvider.Init(this, config);
         }
 
 
