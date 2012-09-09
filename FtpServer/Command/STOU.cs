@@ -10,8 +10,8 @@ namespace SuperSocket.Ftp.FtpService.Command
     {
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
-            string param = requestInfo.Data;
-            if (string.IsNullOrEmpty(requestInfo.Data))
+            string param = requestInfo.Body;
+            if (string.IsNullOrEmpty(requestInfo.Body))
                 param = Guid.NewGuid().ToString();
 
             base.ExecuteCommand(session, new StringRequestInfo(requestInfo.Key, param, new string[]{ }));

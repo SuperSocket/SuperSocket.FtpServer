@@ -16,7 +16,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
-            string ssl = requestInfo.Data;
+            string ssl = requestInfo.Body;
 
             switch (ssl)
             {

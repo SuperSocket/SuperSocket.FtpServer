@@ -22,7 +22,7 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
-            string level = requestInfo.Data;
+            string level = requestInfo.Body;
 
             if (string.IsNullOrEmpty(level) || level.Length > 1)
             {

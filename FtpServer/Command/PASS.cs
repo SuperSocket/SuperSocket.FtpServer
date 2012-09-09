@@ -20,7 +20,7 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
-            string password = requestInfo.Data;
+            string password = requestInfo.Body;
 
             if (string.IsNullOrEmpty(password))
             {

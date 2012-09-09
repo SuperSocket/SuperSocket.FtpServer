@@ -17,7 +17,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
-            long offset = requestInfo.Data.ToLong();
+            long offset = requestInfo.Body.ToLong();
 
             session.Context.Offset = offset;
 

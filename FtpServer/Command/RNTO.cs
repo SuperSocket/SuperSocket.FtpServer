@@ -17,7 +17,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
-            string newfileName = requestInfo.Data;
+            string newfileName = requestInfo.Body;
 
             if (string.IsNullOrEmpty(newfileName))
             {

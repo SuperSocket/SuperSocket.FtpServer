@@ -99,7 +99,7 @@ namespace SuperSocket.Ftp.FtpService
             return dataConn;
         }
 
-        public override void HandleException(Exception e)
+        protected override void HandleException(Exception e)
         {
             Send(Resource.UnknownError_450);
         }

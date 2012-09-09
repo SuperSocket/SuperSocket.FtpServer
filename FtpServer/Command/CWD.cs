@@ -16,7 +16,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
-            string path = requestInfo.Data;
+            string path = requestInfo.Body;
 
             if (string.IsNullOrEmpty(path))
             {

@@ -18,7 +18,7 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
-            string username = requestInfo.Data;
+            string username = requestInfo.Body;
 
             if (string.IsNullOrEmpty(username))
             {

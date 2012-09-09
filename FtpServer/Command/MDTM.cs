@@ -14,7 +14,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
-            string filename = requestInfo.Data;
+            string filename = requestInfo.Body;
 
             if (string.IsNullOrEmpty(filename))
             {
