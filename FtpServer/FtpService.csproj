@@ -79,6 +79,7 @@
     <Compile Include="Command\CWD.cs" />
     <Compile Include="Command\DELE.cs" />
     <Compile Include="Command\FEAT.cs" />
+    <Compile Include="Command\FtpCommandBase.cs" />
     <Compile Include="Command\HELP.cs" />
     <Compile Include="Command\LIST.cs" />
     <Compile Include="Command\MDTM.cs" />
@@ -142,14 +143,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx">
       <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SuperSocket.SocketService.exe.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

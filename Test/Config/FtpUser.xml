@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfFtpUser xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <FtpUser>
+    <UserID>0</UserID>
+    <UserName>anonymous</UserName>
+    <Password>*</Password>
+    <MaxSpace>0</MaxSpace>
+    <UsedSpace>0</UsedSpace>
+    <MaxConnections>5</MaxConnections>
+    <MaxUploadSpeed>0</MaxUploadSpeed>
+    <MaxDownloadSpeed>0</MaxDownloadSpeed>
+    <Root>C:\</Root>
+    <ConnectionCount>0</ConnectionCount>
+  </FtpUser>
+  <FtpUser>
+    <UserID>0</UserID>
+    <UserName>kerry</UserName>
+    <Password>123456</Password>
+    <MaxSpace>0</MaxSpace>
+    <UsedSpace>0</UsedSpace>
+    <MaxConnections>5</MaxConnections>
+    <MaxUploadSpeed>0</MaxUploadSpeed>
+    <MaxDownloadSpeed>0</MaxDownloadSpeed>
+    <Root>C:\</Root>
+    <ConnectionCount>0</ConnectionCount>
+  </FtpUser>
+</ArrayOfFtpUser>

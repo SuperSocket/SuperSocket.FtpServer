@@ -9,7 +9,7 @@ using SuperSocket.SocketBase.Protocol;
 
 namespace SuperSocket.Ftp.FtpService.Command
 {
-    public class RETR : StringCommandBase<FtpSession>
+    public class RETR : FtpCommandBase
     {
         #region StringCommandBase<FtpSession> Members
 

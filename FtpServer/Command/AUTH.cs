@@ -7,15 +7,12 @@ using SuperSocket.SocketBase.Protocol;
 
 namespace SuperSocket.Ftp.FtpService.Command
 {
-    public class AUTH : StringCommandBase<FtpSession>
+    public class AUTH : FtpCommandBase
     {
         #region StringCommandBase<FtpSession> Members
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
-            if (!session.Logged)
-                return;
-
             string ssl = requestInfo.Body;
 
             switch (ssl)

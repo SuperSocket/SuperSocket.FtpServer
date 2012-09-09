@@ -6,7 +6,7 @@ using SuperSocket.SocketBase.Protocol;
 
 namespace SuperSocket.Ftp.FtpService.Command
 {
-    public class NOOP : StringCommandBase<FtpSession>
+    public class NOOP : FtpCommandBase
     {
         #region StringCommandBase<FtpSession> Members
 

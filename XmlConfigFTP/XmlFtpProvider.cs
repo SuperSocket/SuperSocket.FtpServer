@@ -33,44 +33,17 @@ namespace SuperSocket.Ftp.XmlConfigFTP
 
             List<FtpUser> users;
 
-            if (!File.Exists(m_UserSettingFile))
+            try
             {
-                users = new List<FtpUser>();
-                users.Add(new FtpUser
-                {
-                    UserName = "anonymous",
-                    Password = "*",
-                    Root = @"C:\",
-                    MaxConnections = 5
-                });
-                users.Add(new FtpUser
-                {
-                    UserName = "kerry",
-                    Password = "123456",
-                    Root = @"C:\",
-                    MaxConnections = 5
-                });
-
-                XmlSerializerUtil.Serialize(m_UserSettingFile, users);
+                users = XmlSerializerUtil.Deserialize<List<FtpUser>>(m_UserSettingFile);
             }
-            else
+            catch (Exception e)
             {
-                try
-                {
-                    users = XmlSerializerUtil.Deserialize<List<FtpUser>>(m_UserSettingFile);
-                }
-                catch (Exception e)
-                {
-                    AppServer.Logger.Error("Failed to deserialize FtpUser list file!", e);
-                    return false;
-                }
+                AppServer.Logger.Error("Failed to deserialize FtpUser list file!", e);
+                return false;
             }
 
-
-            foreach (var u in users)
-            {
-                m_UserDict[u.UserName] = u;
-            }
+            m_UserDict = users.ToDictionary(u => u.UserName, u => u, StringComparer.OrdinalIgnoreCase);
 
             return true;
         }

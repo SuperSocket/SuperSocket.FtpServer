@@ -34,7 +34,7 @@ namespace SuperSocket.Ftp.FtpService
 
         public FtpServiceProviderBase FtpServiceProvider { get; private set; }
 
-        protected override bool Setup(IRootConfig rootConfig, IServerConfig config)
+        private bool SetupFtpProvider(IRootConfig rootConfig, IServerConfig config)
         {
             var providerType = config.Options.GetValue("ftpProviderType");
             var providerTypeName = config.Options.GetValue("ftpProviderName");
@@ -98,6 +98,14 @@ namespace SuperSocket.Ftp.FtpService
             }
 
             return FtpServiceProvider.Init(this, config);
+        }
+
+        protected override bool Setup(IRootConfig rootConfig, IServerConfig config)
+        {
+            if (!SetupFtpProvider(rootConfig, config))
+                return false;
+
+            return true;
         }
 
 
