@@ -24,12 +24,9 @@ namespace SuperSocket.Ftp.FtpService
 
         protected FtpServer AppServer { get; private set; }
 
-        protected ResourceManager Resource { get; private set; }
-
         public virtual bool Init(FtpServer server, IServerConfig config)
         {
             AppServer = server;
-            Resource = server.Resource;
 
             var dataPortNode = config.Options.GetValue("dataPort");
 
@@ -239,7 +236,7 @@ namespace SuperSocket.Ftp.FtpService
             }
             else
             {
-                context.SetError(Resource.GetString("NotFound_550"));
+                context.SetError(FtpCoreResource.NotFound_550);
                 return null;
             }
         }
@@ -263,19 +260,19 @@ namespace SuperSocket.Ftp.FtpService
                 catch (UnauthorizedAccessException uae)
                 {
                     AppServer.Logger.Error(uae);
-                    context.SetError(Resource.GetString("PermissionDenied_550"));
+                    context.SetError(FtpCoreResource.PermissionDenied_550);
                     return false;
                 }
                 catch (Exception e)
                 {
                     AppServer.Logger.Error(e);
-                    context.SetError(Resource.GetString("DeleteFailed_450"), filename);
+                    context.SetError(FtpCoreResource.DeleteFailed_450, filename);
                     return false;
                 }
             }
             else
             {
-                context.SetError(Resource.GetString("NotFound_550"));
+                context.SetError(FtpCoreResource.NotFound_550);
                 return false;
             }
         }
@@ -294,13 +291,13 @@ namespace SuperSocket.Ftp.FtpService
                 catch (Exception e)
                 {
                     AppServer.Logger.Error(e);
-                    context.SetError(Resource.GetString("FileUnavailable_550"));
+                    context.SetError(FtpCoreResource.FileUnavailable_550);
                     return DateTime.MinValue;
                 }
             }
             else
             {
-                context.SetError(Resource.GetString("NotFound_550"));
+                context.SetError(FtpCoreResource.NotFound_550);
                 return DateTime.MinValue;
             }
         }
@@ -319,13 +316,13 @@ namespace SuperSocket.Ftp.FtpService
                 catch (Exception e)
                 {
                     AppServer.Logger.Error(e);
-                    context.SetError(Resource.GetString("FileUnavailable_550"));
+                    context.SetError(FtpCoreResource.FileUnavailable_550);
                     return 0;
                 }
             }
             else
             {
-                context.SetError(Resource.GetString("NotFound_550"));
+                context.SetError(FtpCoreResource.NotFound_550);
                 return 0;
             }
         }
@@ -343,7 +340,7 @@ namespace SuperSocket.Ftp.FtpService
             catch (Exception e)
             {
                 AppServer.Logger.Error(e);
-                context.SetError(Resource.GetString("RenameToFailed_553"));
+                context.SetError(FtpCoreResource.RenameToFailed_553);
                 return false;
             }
         }
@@ -361,7 +358,7 @@ namespace SuperSocket.Ftp.FtpService
             catch (Exception e)
             {
                 AppServer.Logger.Error(e);
-                context.SetError(Resource.GetString("RenameDirectoryFailed_553"));
+                context.SetError(FtpCoreResource.RenameDirectoryFailed_553);
                 return false;
             }
         }
@@ -386,7 +383,7 @@ namespace SuperSocket.Ftp.FtpService
             catch (Exception e)
             {
                 AppServer.Logger.Error(e);
-                context.SetError(Resource.GetString("FileSystemError_450"));
+                context.SetError(FtpCoreResource.FileSystemError_450);
                 return false;
             }
         }
@@ -402,7 +399,7 @@ namespace SuperSocket.Ftp.FtpService
             catch (Exception e)
             {
                 AppServer.Logger.Error(e);
-                context.SetError(Resource.GetString("FileSystemError_450"));
+                context.SetError(FtpCoreResource.FileSystemError_450);
                 return false;
             }
         }
@@ -508,7 +505,7 @@ namespace SuperSocket.Ftp.FtpService
 
             if (Directory.Exists(dir) || File.Exists(dir))
             {
-                context.SetError(Resource.GetString("DirectoryAlreadyExist_550"), foldername);
+                context.SetError(FtpCoreResource.DirectoryAlreadyExist_550, foldername);
                 return false;
             }
             else
@@ -521,7 +518,7 @@ namespace SuperSocket.Ftp.FtpService
                 catch (Exception e)
                 {
                     AppServer.Logger.Error(e);
-                    context.SetError(Resource.GetString("MakeDirFailed_550"), foldername);
+                    context.SetError(FtpCoreResource.MakeDirFailed_550, foldername);
                     return false;
                 }
             }
@@ -541,13 +538,13 @@ namespace SuperSocket.Ftp.FtpService
                 catch (Exception e)
                 {
                     AppServer.Logger.Error(e);
-                    context.SetError(Resource.GetString("RemoveDirectoryFailed_550"), foldername);
+                    context.SetError(FtpCoreResource.RemoveDirectoryFailed_550, foldername);
                     return false;
                 }
             }
             else
             {
-                context.SetError(Resource.GetString("NotFound_550"));
+                context.SetError(FtpCoreResource.NotFound_550);
                 return false;
             }
         }

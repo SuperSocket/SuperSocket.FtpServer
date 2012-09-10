@@ -26,7 +26,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (session.AppServer.FtpServiceProvider.DeleteFile(session.Context, filename))
             {
-                session.Send(Resource.DeleteOk_250);
+                session.Send(FtpCoreResource.DeleteOk_250);
             }
             else
             {

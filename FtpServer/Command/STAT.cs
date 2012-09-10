@@ -12,7 +12,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
-            session.Send(Resource.NotImplement_502);
+            session.Send(FtpCoreResource.NotImplement_502);
         }
 
         #endregion

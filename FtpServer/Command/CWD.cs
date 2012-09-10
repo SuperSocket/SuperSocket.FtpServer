@@ -30,14 +30,14 @@ namespace SuperSocket.Ftp.FtpService.Command
             {
                 session.Context.CurrentPath = path;
                 session.Context.CurrentFolderID = folderID;
-                session.Send(Resource.ChangeWorkDirOk_250, path);
+                session.Send(FtpCoreResource.ChangeWorkDirOk_250, path);
             }
             else
             {
                 if (session.Context.Status == FtpStatus.Error)
                     session.Send(session.Context.Message);
                 else
-                    session.Send(Resource.NotFound_550);
+                    session.Send(FtpCoreResource.NotFound_550);
             }
         }
 

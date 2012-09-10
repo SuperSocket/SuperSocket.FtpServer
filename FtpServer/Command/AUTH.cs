@@ -31,7 +31,7 @@ namespace SuperSocket.Ftp.FtpService.Command
                     return;
             }
 
-            session.Send(Resource.AuthOk_234, ssl);
+            session.Send(FtpCoreResource.AuthOk_234, ssl);
 
             session.AppServer.ResetSessionSecurity(session, session.SecureProtocol);
         }

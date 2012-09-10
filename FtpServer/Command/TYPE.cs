@@ -40,7 +40,7 @@ namespace SuperSocket.Ftp.FtpService.Command
                     return;
             }
 
-            session.Send(Resource.TypeOk_220, typeCode);
+            session.Send(FtpCoreResource.TypeOk_220, typeCode);
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             session.Context.ResetState();
             //Close current data connection?
             session.CloseDataConnection(session.CurrentDataConnection);
-            session.Send(Resource.AbortOk_226);
+            session.Send(FtpCoreResource.AbortOk_226);
         }
 
         #endregion

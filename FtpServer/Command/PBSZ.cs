@@ -13,7 +13,7 @@ namespace SuperSocket.Ftp.FtpService.Command
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
             session.Context.ResetState();
-            session.Send(Resource.PBSZ_200);
+            session.Send(FtpCoreResource.PBSZ_200);
         }
 
         #endregion

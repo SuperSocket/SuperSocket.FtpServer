@@ -16,8 +16,6 @@ namespace SuperSocket.Ftp.FtpService
 {
     public class FtpServer : AppServer<FtpSession>
     {
-        public ResourceManager Resource { get; private set; }
-
         public FtpServer()
             : base()
         {
@@ -100,9 +98,17 @@ namespace SuperSocket.Ftp.FtpService
             return FtpServiceProvider.Init(this, config);
         }
 
+        private bool SetupResource(IServerConfig config)
+        {
+            return true;
+        }
+
         protected override bool Setup(IRootConfig rootConfig, IServerConfig config)
         {
             if (!SetupFtpProvider(rootConfig, config))
+                return false;
+
+            if (!SetupResource(config))
                 return false;
 
             return true;

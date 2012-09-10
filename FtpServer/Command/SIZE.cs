@@ -31,7 +31,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (session.Context.Status == FtpStatus.Error)
                 session.Send(session.Context.Message);
             else
-                session.Send(Resource.SizeOk_213, size);
+                session.Send(FtpCoreResource.SizeOk_213, size);
         }
 
         #endregion

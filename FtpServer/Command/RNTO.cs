@@ -42,7 +42,7 @@ namespace SuperSocket.Ftp.FtpService.Command
                 }
             }
 
-            session.Send(Resource.RenameToOk_250);
+            session.Send(FtpCoreResource.RenameToOk_250);
         }
 
         #endregion

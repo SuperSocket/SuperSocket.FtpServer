@@ -25,7 +25,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (session.AppServer.FtpServiceProvider.RemoveFolder(session.Context, foldername))
             {
-                session.Send(Resource.RemoveOk_250, session.Context.CurrentPath + "/" + foldername);
+                session.Send(FtpCoreResource.RemoveOk_250, session.Context.CurrentPath + "/" + foldername);
             }
             else
             {

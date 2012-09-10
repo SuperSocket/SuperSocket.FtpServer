@@ -12,7 +12,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
-            session.Send(Resource.GoodBye_221);
+            session.Send(FtpCoreResource.GoodBye_221);
             session.Close();
         }
 

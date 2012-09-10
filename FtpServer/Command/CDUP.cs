@@ -20,7 +20,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (string.IsNullOrEmpty(session.Context.CurrentPath) || session.Context.CurrentPath == "/")
             {
-                session.Send(Resource.NotFound_550);
+                session.Send(FtpCoreResource.NotFound_550);
                 return;
             }
 
@@ -35,14 +35,14 @@ namespace SuperSocket.Ftp.FtpService.Command
                 if (folderID > 0)
                     session.Context.CurrentFolderID = folderID;
 
-                session.Send(string.Format(Resource.ChangeDirectoryUp_250, path));
+                session.Send(string.Format(FtpCoreResource.ChangeDirectoryUp_250, path));
             }
             else
             {
                 if (session.Context.Status == FtpStatus.Error)
                     session.Send(session.Context.Message);
                 else
-                    session.Send(Resource.NotFound_550);
+                    session.Send(FtpCoreResource.NotFound_550);
             }
         }
 

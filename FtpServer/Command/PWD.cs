@@ -12,7 +12,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
-            session.Send(Resource.CurrentDirectory_257, session.Context.CurrentPath);
+            session.Send(FtpCoreResource.CurrentDirectory_257, session.Context.CurrentPath);
         }
 
         #endregion

@@ -18,7 +18,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (session.SecureProtocol == SslProtocols.None)
             {
-                session.Send(Resource.ProtDisabled_431);
+                session.Send(FtpCoreResource.ProtDisabled_431);
                 return;
             }
 
@@ -41,12 +41,12 @@ namespace SuperSocket.Ftp.FtpService.Command
                     session.Context.DataSecureProtocol = session.SecureProtocol;
                     break;
                 default:
-                    session.Send(Resource.ProtectionLevelUnknow_504);
+                    session.Send(FtpCoreResource.ProtectionLevelUnknow_504);
                     return;
             }
 
             session.Context.ResetState();
-            session.Send(Resource.ProtOk_200);
+            session.Send(FtpCoreResource.ProtOk_200);
         }
 
         #endregion

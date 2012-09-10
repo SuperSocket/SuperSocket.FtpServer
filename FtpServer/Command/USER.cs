@@ -14,7 +14,7 @@ namespace SuperSocket.Ftp.FtpService.Command
         {
             if (session.Logged)
             {
-                session.Send(Resource.AlreadyLoggedIn_230);
+                session.Send(FtpCoreResource.AlreadyLoggedIn_230);
                 return;
             }
 
@@ -27,13 +27,13 @@ namespace SuperSocket.Ftp.FtpService.Command
             }
             else if (string.Compare(username, "anonymous", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                session.Send(Resource.RequirePasswor_331, username);
+                session.Send(FtpCoreResource.RequirePasswor_331, username);
                 session.Context.UserName = username;
                 return;
             }
             else
             {
-                session.Send(Resource.RequirePasswor_331, username);
+                session.Send(FtpCoreResource.RequirePasswor_331, username);
                 session.Context.UserName = username;
                 return;
             }

@@ -26,7 +26,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (session.AppServer.FtpServiceProvider.CreateFolder(session.Context, foldername))
             {
-                session.Send(Resource.MakeDirOk_250, session.Context.CurrentPath + "/" + foldername);
+                session.Send(FtpCoreResource.MakeDirOk_250, session.Context.CurrentPath + "/" + foldername);
             }
             else
             {

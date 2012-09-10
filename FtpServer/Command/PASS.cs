@@ -16,7 +16,7 @@ namespace SuperSocket.Ftp.FtpService.Command
         {
             if (session.Logged)
             {
-                session.Send(Resource.AlreadyLoggedIn_230);
+                session.Send(FtpCoreResource.AlreadyLoggedIn_230);
                 return;
             }
 
@@ -42,18 +42,18 @@ namespace SuperSocket.Ftp.FtpService.Command
             {
                 if (session.AppServer.Logon(session.Context, user))
                 {
-                    session.Send(Resource.LoggedIn_230);
+                    session.Send(FtpCoreResource.LoggedIn_230);
                     session.Logged = true;
                 }
                 else
                 {
-                    session.Send(Resource.ReachedLoginLimit_421);
+                    session.Send(FtpCoreResource.ReachedLoginLimit_421);
                     session.Close();
                 }
             }
             else
             {
-                session.Send(Resource.AuthenticationFailed_530);
+                session.Send(FtpCoreResource.AuthenticationFailed_530);
             }
         }
 

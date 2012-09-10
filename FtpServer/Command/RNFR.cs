@@ -30,13 +30,13 @@ namespace SuperSocket.Ftp.FtpService.Command
             {
                 session.Context.RenameFor = filepath;
                 session.Context.RenameItemType = ItemType.File;
-                session.Send(Resource.RenameForOk_350);
+                session.Send(FtpCoreResource.RenameForOk_350);
             }
             else if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, filepath, out folderID))
             {
                 session.Context.RenameFor = filepath;
                 session.Context.RenameItemType = ItemType.Folder;
-                session.Send(Resource.RenameForOk_350);
+                session.Send(FtpCoreResource.RenameForOk_350);
             }
             else
             {

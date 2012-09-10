@@ -30,7 +30,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             }
             else
             {
-                session.Send(string.Format(Resource.FileOk_213, mdfTime.ToString("yyyyMMddhhmmss")));
+                session.Send(string.Format(FtpCoreResource.FileOk_213, mdfTime.ToString("yyyyMMddhhmmss")));
             }
         }
 

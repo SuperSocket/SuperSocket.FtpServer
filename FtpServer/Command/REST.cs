@@ -21,7 +21,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             session.Context.Offset = offset;
 
-            session.Send(Resource.RestartOk_350, offset);
+            session.Send(FtpCoreResource.RestartOk_350, offset);
         }
 
         #endregion

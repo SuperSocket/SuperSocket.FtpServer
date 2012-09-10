@@ -22,11 +22,11 @@ namespace SuperSocket.Ftp.FtpService.Command
             {
                 string address = ((IPEndPoint)session.LocalEndPoint).Address.ToString().Replace('.', ',') + "," + (port >> 8) + "," + (port & 0xFF);
                 session.CurrentDataConnectionPort = port;
-                session.Send(Resource.PassiveEnter_227, address);
+                session.Send(FtpCoreResource.PassiveEnter_227, address);
             }
             else
             {
-                session.Send(Resource.DataConnectionCannotOpen_420);
+                session.Send(FtpCoreResource.DataConnectionCannotOpen_420);
             }
         }
 

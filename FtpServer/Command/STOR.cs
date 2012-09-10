@@ -29,7 +29,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (!session.Context.User.IncreaseConnection())
             {
-                session.Send(Resource.ReachedLoginLimit_421);
+                session.Send(FtpCoreResource.ReachedLoginLimit_421);
                 return;
             }
 
@@ -41,21 +41,21 @@ namespace SuperSocket.Ftp.FtpService.Command
 
                 try
                 {
-                    session.Send(Resource.DataConnectionAccepted_150);
+                    session.Send(FtpCoreResource.DataConnectionAccepted_150);
 
                     if (session.AppServer.FtpServiceProvider.StoreFile(session.Context, filename, stream))
-                        session.Send(Resource.DataTransferComplete_226);
+                        session.Send(FtpCoreResource.DataTransferComplete_226);
                     else
                         session.Send(session.Context.Message);
                 }
                 catch (SocketException)
                 {
-                    session.Send(Resource.DataConnectionError_426);
+                    session.Send(FtpCoreResource.DataConnectionError_426);
                 }
                 catch (Exception e)
                 {
                     session.Logger.Error(e);
-                    session.Send(Resource.OuputFileError_551);
+                    session.Send(FtpCoreResource.OuputFileError_551);
                 }
                 finally
                 {

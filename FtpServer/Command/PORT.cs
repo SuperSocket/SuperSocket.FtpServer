@@ -36,12 +36,12 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (DataConnection.TrySocketPort(session, port))
             {
                 session.CurrentDataConnectionPort = port;
-                session.Send(Resource.PortOk_220);
+                session.Send(FtpCoreResource.PortOk_220);
                 return;
             }
             else
             {
-                session.Send(Resource.PortInvalid_552);
+                session.Send(FtpCoreResource.PortInvalid_552);
                 return;
             }
         }

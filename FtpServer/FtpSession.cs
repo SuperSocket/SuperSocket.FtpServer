@@ -66,13 +66,13 @@ namespace SuperSocket.Ftp.FtpService
 
         protected override void OnSessionStarted()
         {
-            Send(Resource.FTP_Welcome);
+            Send(FtpCoreResource.FTP_Welcome);
             base.OnSessionStarted();
         }
 
         public void SendParameterError()
         {
-            Send(Resource.InvalidArguments_501);
+            Send(FtpCoreResource.InvalidArguments_501);
         }
 
         private List<DataConnection> m_DataConnections = new List<DataConnection>();
@@ -101,7 +101,7 @@ namespace SuperSocket.Ftp.FtpService
 
         protected override void HandleException(Exception e)
         {
-            Send(Resource.UnknownError_450);
+            Send(FtpCoreResource.UnknownError_450);
         }
     }
 }
