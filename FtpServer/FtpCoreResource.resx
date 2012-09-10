@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AuthOk_234" xml:space="preserve">
     <value>234 AUTH Command OK. Initializing {0} connection.</value>
@@ -197,13 +197,7 @@
   </data>
   <data name="FeaturesOk_221" xml:space="preserve">
     <value>211-Extensions supported:
-SIZE
-MLSD
-MLST
-NLST
-MDTM
-REST STREAM
-UTF8
+{0}
 211 END</value>
   </data>
   <data name="FileOk_213" xml:space="preserve">
@@ -286,5 +280,11 @@ UTF8
   </data>
   <data name="UnknownError_450" xml:space="preserve">
     <value>450 Unknown error.</value>
+  </data>
+  <data name="AuthError_504" xml:space="preserve">
+    <value>504 The security mechanism is not supported.</value>
+  </data>
+  <data name="UnknownCommand_500" xml:space="preserve">
+    <value>500 Unknown command.</value>
   </data>
 </root>

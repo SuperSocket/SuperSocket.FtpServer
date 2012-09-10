@@ -8,6 +8,14 @@ namespace SuperSocket.Ftp.FtpService.Command
 {
     public class MLSD : FtpCommandBase
     {
+        public override bool IsExtCommand
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         #region StringCommandBase<FtpSession> Members
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)

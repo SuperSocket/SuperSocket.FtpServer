@@ -9,10 +9,24 @@ namespace SuperSocket.Ftp.FtpService.Command
 {
     public class AUTH : FtpCommandBase
     {
+        public override bool IsExtCommand
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         #region StringCommandBase<FtpSession> Members
 
         public override void ExecuteCommand(FtpSession session, StringRequestInfo requestInfo)
         {
+            if (session.AppServer.Certificate == null)
+            {
+                session.Send(FtpCoreResource.AuthError_504);
+                return;
+            }
+
             string ssl = requestInfo.Body;
 
             switch (ssl)
@@ -27,7 +41,7 @@ namespace SuperSocket.Ftp.FtpService.Command
                     session.SecureProtocol = SslProtocols.Tls;
                     break;
                 default:
-                    session.SendParameterError();
+                    session.Send(FtpCoreResource.AuthError_504);
                     return;
             }
 

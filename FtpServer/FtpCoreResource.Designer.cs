@@ -97,6 +97,15 @@ namespace SuperSocket.Ftp.FtpService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 504 The security mechanism is not supported..
+        /// </summary>
+        public static string AuthError_504 {
+            get {
+                return ResourceManager.GetString("AuthError_504", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 234 AUTH Command OK. Initializing {0} connection..
         /// </summary>
         public static string AuthOk_234 {
@@ -215,13 +224,7 @@ namespace SuperSocket.Ftp.FtpService {
         
         /// <summary>
         ///   Looks up a localized string similar to 211-Extensions supported:
-        ///SIZE
-        ///MLSD
-        ///MLST
-        ///NLST
-        ///MDTM
-        ///REST STREAM
-        ///UTF8
+        ///{0}
         ///211 END.
         /// </summary>
         public static string FeaturesOk_221 {
@@ -542,6 +545,15 @@ namespace SuperSocket.Ftp.FtpService {
         public static string TypeOk_220 {
             get {
                 return ResourceManager.GetString("TypeOk_220", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 500 Unknown command..
+        /// </summary>
+        public static string UnknownCommand_500 {
+            get {
+                return ResourceManager.GetString("UnknownCommand_500", resourceCulture);
             }
         }
         

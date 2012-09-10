@@ -7,6 +7,7 @@ using SuperSocket.Ftp.FtpService.Membership;
 using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Command;
+using SuperSocket.SocketBase.Protocol;
 
 namespace SuperSocket.Ftp.FtpService
 {
@@ -102,6 +103,11 @@ namespace SuperSocket.Ftp.FtpService
         protected override void HandleException(Exception e)
         {
             Send(FtpCoreResource.UnknownError_450);
+        }
+
+        protected override void HandleUnknownRequest(StringRequestInfo requestInfo)
+        {
+            this.Send(FtpCoreResource.UnknownCommand_500);
         }
     }
 }

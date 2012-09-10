@@ -15,7 +15,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
-            session.Send(FtpCoreResource.FeaturesOk_221);
+            session.Send(session.AppServer.FeaturesResponse);
         }
 
         #endregion

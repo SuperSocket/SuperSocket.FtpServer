@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Linq;
 using System.Resources;
 using SuperSocket.Common;
+using SuperSocket.Ftp.FtpService.Command;
 using SuperSocket.Ftp.FtpService.Membership;
 using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase;
+using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Config;
 using SuperSocket.SocketBase.Protocol;
 
@@ -16,8 +18,9 @@ namespace SuperSocket.Ftp.FtpService
 {
     public class FtpServer : AppServer<FtpSession>
     {
+        internal string FeaturesResponse { get; private set; }
+
         public FtpServer()
-            : base()
         {
 
         }
@@ -100,6 +103,20 @@ namespace SuperSocket.Ftp.FtpService
 
         private bool SetupResource(IServerConfig config)
         {
+            FeaturesResponse = string.Format(FtpCoreResource.FeaturesOk_221, string.Join("\r\n", m_ExtCommands));
+            return true;
+        }
+
+        private string[] m_ExtCommands;
+
+        protected override bool SetupCommands(Dictionary<string, ICommand<FtpSession, StringRequestInfo>> commandContainer)
+        {
+            if (!base.SetupCommands(commandContainer))
+                return false;
+
+            m_ExtCommands = commandContainer.Values.OfType<FtpCommandBase>().Where(c =>
+                    c.IsExtCommand).Select(c => c.Name).ToArray();
+
             return true;
         }
 
