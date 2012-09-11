@@ -67,6 +67,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +121,7 @@
     <Compile Include="FtpUser.cs" />
     <Compile Include="Membership\Anonymous.cs" />
     <Compile Include="Membership\PasswordFormat.cs" />
+    <Compile Include="Membership\WindowsDomainMembership.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
