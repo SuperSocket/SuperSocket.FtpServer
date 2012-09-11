@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading;
+using SuperSocket.Common;
 using SuperSocket.Ftp.FtpCommon;
 using SuperSocket.Ftp.FtpService.Storage;
-using SuperSocket.Common;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
-using System.Resources;
 
 namespace SuperSocket.Ftp.FtpService
 {

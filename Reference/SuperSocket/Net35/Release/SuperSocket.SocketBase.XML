@@ -185,7 +185,7 @@
             Gets/sets the session closed event handler.
             </summary>
         </member>
-        <member name="E:SuperSocket.SocketBase.IAppServer`2.RequestHandler">
+        <member name="E:SuperSocket.SocketBase.IAppServer`2.NewRequestReceived">
             <summary>
             Occurs when [request comming].
             </summary>
@@ -587,7 +587,7 @@
             bool: whether process the received data further
             </summary>
         </member>
-        <member name="E:SuperSocket.SocketBase.AppServerBase`2.RequestHandler">
+        <member name="E:SuperSocket.SocketBase.AppServerBase`2.NewRequestReceived">
             <summary>
             Occurs when a full request item received.
             </summary>
