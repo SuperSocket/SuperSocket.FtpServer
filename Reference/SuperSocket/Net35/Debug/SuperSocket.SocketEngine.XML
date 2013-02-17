@@ -48,18 +48,26 @@
             Gets the name of the server instance.
             </summary>
         </member>
-        <member name="P:SuperSocket.SocketEngine.AppDomainAppServer.IsRunning">
+        <member name="P:SuperSocket.SocketEngine.AppDomainAppServer.State">
             <summary>
-            Gets a value indicating whether this instance is running.
+            Gets the current state of the work item.
             </summary>
             <value>
-            	<c>true</c> if this instance is running; otherwise, <c>false</c>.
+            The state.
             </value>
         </member>
         <member name="P:SuperSocket.SocketEngine.AppDomainAppServer.SessionCount">
             <summary>
             Gets the total session count.
             </summary>
+        </member>
+        <member name="P:SuperSocket.SocketEngine.AppDomainAppServer.Summary">
+            <summary>
+            Gets the state data of the server.
+            </summary>
+            <value>
+            The state of the server.
+            </value>
         </member>
         <member name="T:SuperSocket.SocketEngine.AppDomainBootstrap">
             <summary>
@@ -130,11 +138,6 @@
         <member name="P:SuperSocket.SocketEngine.AppDomainBootstrap.StartupConfigFile">
             <summary>
             Gets the startup config file.
-            </summary>
-        </member>
-        <member name="E:SuperSocket.SocketEngine.AppDomainBootstrap.PerformanceDataCollected">
-            <summary>
-            Occurs when [performance data collected].
             </summary>
         </member>
         <member name="M:SuperSocket.SocketEngine.WorkItemFactoryInfoLoader.ValidateProviderType(System.String)">
@@ -284,11 +287,6 @@
             Gets the startup config file.
             </summary>
         </member>
-        <member name="E:SuperSocket.SocketEngine.DefaultBootstrap.PerformanceDataCollected">
-            <summary>
-            Occurs when [performance data collected].
-            </summary>
-        </member>
         <member name="T:SuperSocket.SocketEngine.AssemblyImport">
             <summary>
             AssemblyImport, used for importing assembly to the current AppDomain
@@ -298,6 +296,14 @@
             <summary>
             Initializes a new instance of the <see cref="T:SuperSocket.SocketEngine.AssemblyImport"/> class.
             </summary>
+        </member>
+        <member name="P:SuperSocket.SocketEngine.SocketServerBase.SendingQueuePool">
+            <summary>
+            Gets the sending queue manager.
+            </summary>
+            <value>
+            The sending queue manager.
+            </value>
         </member>
         <member name="T:SuperSocket.SocketEngine.SocketSession">
             <summary>
@@ -314,15 +320,36 @@
             Says the welcome information when a client connectted.
             </summary>
         </member>
-        <member name="M:SuperSocket.SocketEngine.SocketSession.OnClose(SuperSocket.SocketBase.CloseReason)">
+        <member name="M:SuperSocket.SocketEngine.SocketSession.OnClosed(SuperSocket.SocketBase.CloseReason)">
             <summary>
             Called when [close].
             </summary>
         </member>
-        <member name="M:SuperSocket.SocketEngine.SocketSession.StartSend">
+        <member name="M:SuperSocket.SocketEngine.SocketSession.TrySend(System.Collections.Generic.IList{System.ArraySegment{System.Byte}})">
             <summary>
-            Starts the sending.
+            Tries to send array segment.
             </summary>
+            <param name="segments">The segments.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketEngine.SocketSession.TrySend(System.ArraySegment{System.Byte})">
+            <summary>
+            Tries to send array segment.
+            </summary>
+            <param name="segment">The segment.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketEngine.SocketSession.SendAsync(SuperSocket.Common.SendingQueue)">
+            <summary>
+            Sends in async mode.
+            </summary>
+            <param name="queue">The queue.</param>
+        </member>
+        <member name="M:SuperSocket.SocketEngine.SocketSession.SendSync(SuperSocket.Common.SendingQueue)">
+            <summary>
+            Sends in sync mode.
+            </summary>
+            <param name="queue">The queue.</param>
         </member>
         <member name="P:SuperSocket.SocketEngine.SocketSession.SessionID">
             <summary>
@@ -432,6 +459,24 @@
             Gets the thumbprint.
             </summary>
         </member>
+        <member name="T:SuperSocket.SocketEngine.Configuration.CommandAssembly">
+            <summary>
+            Command assembly configuration element
+            </summary>
+        </member>
+        <member name="P:SuperSocket.SocketEngine.Configuration.CommandAssembly.Assembly">
+            <summary>
+            Gets the assembly name.
+            </summary>
+            <value>
+            The assembly.
+            </value>
+        </member>
+        <member name="T:SuperSocket.SocketEngine.Configuration.CommandAssemblyCollection">
+            <summary>
+            Command assembly configuation collection
+            </summary>
+        </member>
         <member name="T:SuperSocket.SocketEngine.Configuration.Listener">
             <summary>
             Listener configuration
@@ -502,9 +547,9 @@
             The type of the server.
             </value>
         </member>
-        <member name="P:SuperSocket.SocketEngine.Configuration.Server.RequestFilterFactory">
+        <member name="P:SuperSocket.SocketEngine.Configuration.Server.ReceiveFilterFactory">
             <summary>
-            Gets the request filter factory.
+            Gets the Receive filter factory.
             </summary>
         </member>
         <member name="P:SuperSocket.SocketEngine.Configuration.Server.Ip">
@@ -576,6 +621,14 @@
             </summary>
             <value>
             	<c>true</c> if [log basic session activity]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketEngine.Configuration.Server.LogAllSocketException">
+            <summary>
+            Gets a value indicating whether [log all socket exception].
+            </summary>
+            <value>
+            <c>true</c> if [log all socket exception]; otherwise, <c>false</c>.
             </value>
         </member>
         <member name="P:SuperSocket.SocketEngine.Configuration.Server.ClearIdleSession">
@@ -689,6 +742,14 @@
             Gets the listeners' configuration.
             </summary>
         </member>
+        <member name="P:SuperSocket.SocketEngine.Configuration.Server.CommandAssemblies">
+            <summary>
+            Gets the command assemblies configuration.
+            </summary>
+            <value>
+            The command assemblies.
+            </value>
+        </member>
         <member name="T:SuperSocket.SocketEngine.Configuration.ServerCollection">
             <summary>
             Server configuration collection
@@ -739,7 +800,7 @@
             Gets the defined log factory types.
             </summary>
         </member>
-        <member name="P:SuperSocket.SocketEngine.Configuration.SocketServiceConfig.RequestFilterFactories">
+        <member name="P:SuperSocket.SocketEngine.Configuration.SocketServiceConfig.ReceiveFilterFactories">
             <summary>
             Gets the logfactory name of the bootstrap.
             </summary>
@@ -907,22 +968,17 @@
             Gets the name of the server instance.
             </summary>
         </member>
-        <member name="P:SuperSocket.SocketEngine.MarshalAppServer.IsRunning">
+        <member name="P:SuperSocket.SocketEngine.MarshalAppServer.State">
             <summary>
-            Gets a value indicating whether this instance is running.
+            Gets the current state of the work item.
             </summary>
             <value>
-            	<c>true</c> if this instance is running; otherwise, <c>false</c>.
+            The state.
             </value>
         </member>
         <member name="P:SuperSocket.SocketEngine.MarshalAppServer.SessionCount">
             <summary>
             Gets the total session count.
-            </summary>
-        </member>
-        <member name="E:SuperSocket.SocketEngine.PerformanceMonitor.Collected">
-            <summary>
-            Occurs when [performance data collected].
             </summary>
         </member>
         <member name="M:SuperSocket.SocketEngine.SocketListenerBase.Start(SuperSocket.SocketBase.Config.IServerConfig)">
