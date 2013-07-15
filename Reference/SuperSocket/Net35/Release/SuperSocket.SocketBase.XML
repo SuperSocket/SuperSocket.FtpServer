@@ -52,6 +52,62 @@
             An item can be started and stopped
             </summary>
         </member>
+        <member name="T:SuperSocket.SocketBase.IWorkItemBase">
+            <summary>
+            An item can be started and stopped
+            </summary>
+        </member>
+        <member name="T:SuperSocket.SocketBase.IStatusInfoSource">
+            <summary>
+            StatusInfo source interface
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IStatusInfoSource.GetServerStatusMetadata">
+            <summary>
+            Gets the server status metadata.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IStatusInfoSource.CollectServerStatus(SuperSocket.SocketBase.StatusInfoCollection)">
+            <summary>
+            Collects the bootstrap status.
+            </summary>
+            <param name="bootstrapStatus">The bootstrap status.</param>
+            <returns></returns>
+        </member>
+        <member name="T:SuperSocket.SocketBase.ISystemEndPoint">
+            <summary>
+            The interface for endpoint who can send/receive system message with each other
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.ISystemEndPoint.TransferSystemMessage(System.String,System.Object)">
+            <summary>
+            Transfers the system message.
+            </summary>
+            <param name="messageType">Type of the message.</param>
+            <param name="messageData">The message data.</param>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IWorkItemBase.Start">
+            <summary>
+            Starts this server instance.
+            </summary>
+            <returns>return true if start successfull, else false</returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IWorkItemBase.Stop">
+            <summary>
+            Stops this server instance.
+            </summary>
+        </member>
+        <member name="P:SuperSocket.SocketBase.IWorkItemBase.Name">
+            <summary>
+            Gets the name.
+            </summary>
+        </member>
+        <member name="P:SuperSocket.SocketBase.IWorkItemBase.SessionCount">
+            <summary>
+            Gets the total session count.
+            </summary>
+        </member>
         <member name="M:SuperSocket.SocketBase.IWorkItem.Setup(SuperSocket.SocketBase.IBootstrap,SuperSocket.SocketBase.Config.IServerConfig,SuperSocket.SocketBase.Provider.ProviderFactoryInfo[])">
             <summary>
             Setups with the specified root config.
@@ -61,48 +117,12 @@
             <param name="factories">The factories.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.IWorkItem.Start">
-            <summary>
-            Starts this server instance.
-            </summary>
-            <returns>return true if start successfull, else false</returns>
-        </member>
-        <member name="M:SuperSocket.SocketBase.IWorkItem.Stop">
-            <summary>
-            Stops this server instance.
-            </summary>
-        </member>
-        <member name="M:SuperSocket.SocketBase.IWorkItem.CollectServerSummary(SuperSocket.SocketBase.NodeSummary)">
-            <summary>
-            Collects the server summary.
-            </summary>
-            <param name="nodeSummary">The node summary.</param>
-            <returns></returns>
-        </member>
-        <member name="P:SuperSocket.SocketBase.IWorkItem.Name">
-            <summary>
-            Gets the name.
-            </summary>
-        </member>
         <member name="P:SuperSocket.SocketBase.IWorkItem.State">
             <summary>
             Gets the current state of the work item.
             </summary>
             <value>
             The state.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.IWorkItem.SessionCount">
-            <summary>
-            Gets the total session count.
-            </summary>
-        </member>
-        <member name="P:SuperSocket.SocketBase.IWorkItem.Summary">
-            <summary>
-            Gets the state of the server.
-            </summary>
-            <value>
-            The state of the server.
             </value>
         </member>
         <member name="T:SuperSocket.SocketBase.ILoggerProvider">
@@ -120,6 +140,13 @@
             Creates the app session.
             </summary>
             <param name="socketSession">The socket session.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IAppServer.RegisterSession(SuperSocket.SocketBase.IAppSession)">
+            <summary>
+            Registers the new created app session into the appserver's session container.
+            </summary>
+            <param name="session">The session.</param>
             <returns></returns>
         </member>
         <member name="M:SuperSocket.SocketBase.IAppServer.GetAppSessionByID(System.String)">
@@ -247,6 +274,22 @@
             The socket server.
             </value>
         </member>
+        <member name="T:SuperSocket.SocketBase.IRemoteCertificateValidator">
+            <summary>
+            The basic interface for RemoteCertificateValidator
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IRemoteCertificateValidator.Validate(SuperSocket.SocketBase.IAppSession,System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+            <summary>
+            Validates the remote certificate
+            </summary>
+            <param name="session">The session.</param>
+            <param name="sender">The sender.</param>
+            <param name="certificate">The certificate.</param>
+            <param name="chain">The chain.</param>
+            <param name="sslPolicyErrors">The SSL policy errors.</param>
+            <returns></returns>
+        </member>
         <member name="F:SuperSocket.SocketBase.AppServerBase`2.NullAppSession">
             <summary>
             Null appSession instance
@@ -353,6 +396,17 @@
             <param name="certificate">The certificate config.</param>
             <returns></returns>
         </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.ValidateClientCertificate(`0,System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+            <summary>
+            Validates the client certificate. This method is only used if the certificate configuration attribute "clientCertificateRequired" is true.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="sender">The sender.</param>
+            <param name="certificate">The certificate.</param>
+            <param name="chain">The chain.</param>
+            <param name="sslPolicyErrors">The SSL policy errors.</param>
+            <returns>return the validation result</returns>
+        </member>
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.SetupSocketServer">
             <summary>
             Setups the socket server.instance
@@ -377,6 +431,11 @@
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnStartup">
             <summary>
             Called when [startup].
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnStarted">
+            <summary>
+            Called when [started].
             </summary>
         </member>
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnStopped">
@@ -440,6 +499,13 @@
             <param name="socketSession">The socket session.</param>
             <returns></returns>
         </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#IAppServer#RegisterSession(SuperSocket.SocketBase.IAppSession)">
+            <summary>
+            Registers the new created app session into the appserver's session container.
+            </summary>
+            <param name="session">The session.</param>
+            <returns></returns>
+        </member>
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.RegisterSession(System.String,`0)">
             <summary>
             Registers the session into session container.
@@ -500,23 +566,37 @@
             Gets all sessions in sessions snapshot.
             </summary>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppServerBase`2.UpdateServerSummary(SuperSocket.SocketBase.ServerSummary)">
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.UpdateServerStatus(SuperSocket.SocketBase.StatusInfoCollection)">
             <summary>
             Updates the summary of the server.
             </summary>
-            <param name="serverSummary">The server summary.</param>
+            <param name="serverStatus">The server status.</param>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnServerSummaryCollected(SuperSocket.SocketBase.NodeSummary,SuperSocket.SocketBase.ServerSummary)">
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnServerStatusCollected(SuperSocket.SocketBase.StatusInfoCollection,SuperSocket.SocketBase.StatusInfoCollection)">
             <summary>
-            Called when [summary data collected], you can override this method to get collected performance data
+            Called when [server status collected].
             </summary>
-            <param name="nodeSummary">The node summary.</param>
-            <param name="serverSummary">The server summary.</param>
+            <param name="bootstrapStatus">The bootstrapStatus status.</param>
+            <param name="serverStatus">The server status.</param>
         </member>
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.Dispose">
             <summary>
             Releases unmanaged and - optionally - managed resources
             </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#ISystemEndPoint#TransferSystemMessage(System.String,System.Object)">
+            <summary>
+            Transfers the system message
+            </summary>
+            <param name="messageType">Type of the message.</param>
+            <param name="messageData">The message data.</param>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnSystemMessageReceived(System.String,System.Object)">
+            <summary>
+            Called when [system message received].
+            </summary>
+            <param name="messageType">Type of the message.</param>
+            <param name="messageData">The message data.</param>
         </member>
         <member name="P:SuperSocket.SocketBase.AppServerBase`2.Config">
             <summary>
@@ -598,6 +678,14 @@
             The log factory.
             </value>
         </member>
+        <member name="P:SuperSocket.SocketBase.AppServerBase`2.TextEncoding">
+            <summary>
+            Gets the default text encoding.
+            </summary>
+            <value>
+            The text encoding.
+            </value>
+        </member>
         <member name="P:SuperSocket.SocketBase.AppServerBase`2.Name">
             <summary>
             Gets the name of the server instance.
@@ -648,22 +736,6 @@
             <summary>
             Gets the total session count.
             </summary>
-        </member>
-        <member name="P:SuperSocket.SocketBase.AppServerBase`2.ServerSummaryType">
-            <summary>
-            Gets the type of the server state. The type must inherit from ServerState
-            </summary>
-            <value>
-            The type of the server state.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.AppServerBase`2.Summary">
-            <summary>
-            Gets the state of the server.
-            </summary>
-            <value>
-            The state data of the server.
-            </value>
         </member>
         <member name="M:SuperSocket.SocketBase.AppServer`2.#ctor">
             <summary>
@@ -964,13 +1036,6 @@
             </summary>
             <param name="message">The message which will be sent.</param>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppSession`2.SendResponse(System.String)">
-            <summary>
-            Sends the response.
-            </summary>
-            <param name="message">The message which will be sent.</param>
-            <returns>Indicate whether the message was pushed into the sending queue</returns>
-        </member>
         <member name="M:SuperSocket.SocketBase.AppSession`2.TrySend(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Try to send the data to client.
@@ -983,14 +1048,6 @@
         <member name="M:SuperSocket.SocketBase.AppSession`2.Send(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Sends the data to client.
-            </summary>
-            <param name="data">The data which will be sent.</param>
-            <param name="offset">The offset.</param>
-            <param name="length">The length.</param>
-        </member>
-        <member name="M:SuperSocket.SocketBase.AppSession`2.SendResponse(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Sends the response.
             </summary>
             <param name="data">The data which will be sent.</param>
             <param name="offset">The offset.</param>
@@ -1009,13 +1066,6 @@
             </summary>
             <param name="segment">The segment which will be sent.</param>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppSession`2.SendResponse(System.ArraySegment{System.Byte})">
-            <summary>
-            Sends the response.
-            </summary>
-            <param name="segment">The segment which will be sent.</param>
-            <returns>Indicate whether the message was pushed into the sending queue; if it returns false, the sending queue may be full or the socket is not connected</returns>
-        </member>
         <member name="M:SuperSocket.SocketBase.AppSession`2.TrySend(System.Collections.Generic.IList{System.ArraySegment{System.Byte}})">
             <summary>
             Try to send the data segments to clinet.
@@ -1029,27 +1079,12 @@
             </summary>
             <param name="segments">The segments.</param>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppSession`2.SendResponse(System.Collections.Generic.IList{System.ArraySegment{System.Byte}})">
-            <summary>
-            Sends the response.
-            </summary>
-            <param name="segments">The segments.</param>
-            <returns>Indicate whether the message was pushed into the sending queue</returns>
-        </member>
         <member name="M:SuperSocket.SocketBase.AppSession`2.Send(System.String,System.Object[])">
             <summary>
             Sends the response.
             </summary>
             <param name="message">The message which will be sent.</param>
             <param name="paramValues">The parameter values.</param>
-        </member>
-        <member name="M:SuperSocket.SocketBase.AppSession`2.SendResponse(System.String,System.Object[])">
-            <summary>
-            Sends the response.
-            </summary>
-            <param name="message">The message which will be sent.</param>
-            <param name="paramValues">The parameter values.</param>
-            <returns>Indicate whether the message was pushed into the sending queue</returns>
         </member>
         <member name="M:SuperSocket.SocketBase.AppSession`2.SetNextReceiveFilter(SuperSocket.SocketBase.Protocol.IReceiveFilter{`1})">
             <summary>
@@ -1216,22 +1251,7 @@
             <param name="message">The message.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppSession`1.SendResponse(System.String)">
-            <summary>
-            Sends the response.
-            </summary>
-            <param name="message">The message.</param>
-            <returns>Indicate whether the message was pushed into the sending queue</returns>
-        </member>
         <member name="M:SuperSocket.SocketBase.AppSession`1.Send(System.String,System.Object[])">
-            <summary>
-            Sends the response.
-            </summary>
-            <param name="message">The message.</param>
-            <param name="paramValues">The param values.</param>
-            <returns>Indicate whether the message was pushed into the sending queue</returns>
-        </member>
-        <member name="M:SuperSocket.SocketBase.AppSession`1.SendResponse(System.String,System.Object[])">
             <summary>
             Sends the response.
             </summary>
@@ -1330,7 +1350,7 @@
             Command Executing Context
             </summary>
         </member>
-        <member name="M:SuperSocket.SocketBase.CommandExecutingContext.#ctor(SuperSocket.SocketBase.IAppSession,SuperSocket.SocketBase.Protocol.IRequestInfo,SuperSocket.SocketBase.Command.ICommand)">
+        <member name="M:SuperSocket.SocketBase.CommandExecutingContext.Initialize(SuperSocket.SocketBase.IAppSession,SuperSocket.SocketBase.Protocol.IRequestInfo,SuperSocket.SocketBase.Command.ICommand)">
             <summary>
             Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.CommandExecutingContext"/> class.
             </summary>
@@ -1359,31 +1379,6 @@
             </summary>
             <value>
               <c>true</c> if cancel; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="T:SuperSocket.SocketBase.CommandFilterAttribute">
-            <summary>
-            Command filter attribute
-            </summary>
-        </member>
-        <member name="M:SuperSocket.SocketBase.CommandFilterAttribute.OnCommandExecuting(SuperSocket.SocketBase.CommandExecutingContext)">
-            <summary>
-            Called when [command executing].
-            </summary>
-            <param name="commandContext">The command context.</param>
-        </member>
-        <member name="M:SuperSocket.SocketBase.CommandFilterAttribute.OnCommandExecuted(SuperSocket.SocketBase.CommandExecutingContext)">
-            <summary>
-            Called when [command executed].
-            </summary>
-            <param name="commandContext">The command context.</param>
-        </member>
-        <member name="P:SuperSocket.SocketBase.CommandFilterAttribute.Order">
-            <summary>
-            Gets or sets the execution order.
-            </summary>
-            <value>
-            The order.
             </value>
         </member>
         <member name="T:SuperSocket.SocketBase.Command.CommandBase`2">
@@ -1666,6 +1661,22 @@
             Gets the thumbprint.
             </summary>
         </member>
+        <member name="P:SuperSocket.SocketBase.Config.ICertificateConfig.StoreLocation">
+            <summary>
+            Gets the store location of the certificate.
+            </summary>
+            <value>
+            The store location.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Config.ICertificateConfig.ClientCertificateRequired">
+            <summary>
+            Gets a value indicating whether [client certificate required].
+            </summary>
+            <value>
+            <c>true</c> if [client certificate required]; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="P:SuperSocket.SocketBase.Config.CertificateConfig.FilePath">
             <summary>
             Gets/sets the file path.
@@ -1684,10 +1695,26 @@
             The name of the store.
             </value>
         </member>
+        <member name="P:SuperSocket.SocketBase.Config.CertificateConfig.StoreLocation">
+            <summary>
+            Gets/sets the store location of the certificate.
+            </summary>
+            <value>
+            The store location.
+            </value>
+        </member>
         <member name="P:SuperSocket.SocketBase.Config.CertificateConfig.Thumbprint">
             <summary>
             Gets/sets the thumbprint.
             </summary>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Config.CertificateConfig.ClientCertificateRequired">
+            <summary>
+            Gets/sets a value indicating whether [client certificate required].
+            </summary>
+            <value>
+            <c>true</c> if [client certificate required]; otherwise, <c>false</c>.
+            </value>
         </member>
         <member name="T:SuperSocket.SocketBase.Config.CommandAssemblyConfig">
             <summary>
@@ -2189,6 +2216,14 @@
             <c>true</c> if [log all socket exception]; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="P:SuperSocket.SocketBase.Config.IServerConfig.TextEncoding">
+            <summary>
+            Gets the default text encoding.
+            </summary>
+            <value>
+            The text encoding.
+            </value>
+        </member>
         <member name="P:SuperSocket.SocketBase.Config.IServerConfig.CommandAssemblies">
             <summary>
             Gets the command assemblies configuration.
@@ -2265,6 +2300,11 @@
         <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultMaxRequestLength">
             <summary>
             Default MaxRequestLength
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultSendTimeout">
+            <summary>
+            Default send timeout value, in milliseconds
             </summary>
         </member>
         <member name="M:SuperSocket.SocketBase.Config.ServerConfig.#ctor(SuperSocket.SocketBase.Config.IServerConfig)">
@@ -2512,6 +2552,14 @@
             <c>true</c> if [log all socket exception]; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="P:SuperSocket.SocketBase.Config.ServerConfig.TextEncoding">
+            <summary>
+            Gets/sets the default text encoding.
+            </summary>
+            <value>
+            The text encoding.
+            </value>
+        </member>
         <member name="P:SuperSocket.SocketBase.Config.ServerConfig.CommandAssemblies">
             <summary>
             Gets the command assemblies configuration.
@@ -2580,59 +2628,6 @@
             Gets the type.
             </summary>
         </member>
-        <member name="T:SuperSocket.SocketBase.DisplayAttribute">
-            <summary>
-            Display attribute
-            </summary>
-        </member>
-        <member name="M:SuperSocket.SocketBase.DisplayAttribute.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.DisplayAttribute"/> class.
-            </summary>
-        </member>
-        <member name="M:SuperSocket.SocketBase.DisplayAttribute.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.DisplayAttribute"/> class.
-            </summary>
-            <param name="name">The name.</param>
-        </member>
-        <member name="P:SuperSocket.SocketBase.DisplayAttribute.Name">
-            <summary>
-            Gets the name.
-            </summary>
-        </member>
-        <member name="P:SuperSocket.SocketBase.DisplayAttribute.ShortName">
-            <summary>
-            Gets or sets the short name.
-            </summary>
-            <value>
-            The short name.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.DisplayAttribute.Format">
-            <summary>
-            Gets or sets the format.
-            </summary>
-            <value>
-            The format.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.DisplayAttribute.Order">
-            <summary>
-            Gets or sets the order.
-            </summary>
-            <value>
-            The order.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.DisplayAttribute.OutputInPerfLog">
-            <summary>
-            Gets or sets a value indicating whether [output in perf log].
-            </summary>
-            <value>
-              <c>true</c> if [output in perf log]; otherwise, <c>false</c>.
-            </value>
-        </member>
         <member name="T:SuperSocket.SocketBase.Extensions">
             <summary>
             Extensions class for SocketBase project
@@ -2644,6 +2639,14 @@
             </summary>
             <param name="bootstrap">The bootstrap.</param>
             <param name="name">The name of the appserver instance.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Extensions.GetStatusInfoMetadata(System.Type)">
+            <summary>
+            Gets the status info metadata from the server type.
+            </summary>
+            <param name="serverType">Type of the server.</param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
@@ -2737,6 +2740,14 @@
             <summary>
             Gets the startup config file.
             </summary>
+        </member>
+        <member name="P:SuperSocket.SocketBase.IBootstrap.BaseDirectory">
+            <summary>
+            Gets the base directory.
+            </summary>
+            <value>
+            The base directory.
+            </value>
         </member>
         <member name="T:SuperSocket.SocketBase.IConnectionFilter">
             <summary>
@@ -2956,6 +2967,11 @@
         <member name="F:SuperSocket.SocketBase.IsolationMode.AppDomain">
             <summary>
             Isolation by AppDomain
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.IsolationMode.Process">
+            <summary>
+            Isolation by process
             </summary>
         </member>
         <member name="T:SuperSocket.SocketBase.ListenerInfo">
@@ -4012,7 +4028,9 @@
             </summary>
         </member>
         <member name="P:SuperSocket.SocketBase.Logging.LogFactoryBase.IsSharedConfig">
+            <summary>
             Gets a value indicating whether the server instance is running in isolation mode and the multiple server instances share the same logging configuration.
+            </summary>
         </member>
         <member name="M:SuperSocket.SocketBase.Logging.Log4NetLogFactory.#ctor">
             <summary>
@@ -4032,65 +4050,247 @@
             <param name="name">The name.</param>
             <returns></returns>
         </member>
-        <member name="T:SuperSocket.SocketBase.NodeSummary">
+        <member name="T:SuperSocket.SocketBase.Metadata.AppServerMetadataTypeAttribute">
             <summary>
-            GlobalPerformanceData class
+            StatusInfoMetadata type attribute
             </summary>
         </member>
-        <member name="P:SuperSocket.SocketBase.NodeSummary.CpuUsage">
+        <member name="M:SuperSocket.SocketBase.Metadata.AppServerMetadataTypeAttribute.#ctor(System.Type)">
             <summary>
-            Gets or sets the cpu usage.
+            Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.Metadata.AppServerMetadataTypeAttribute"/> class.
+            </summary>
+            <param name="metadataType">Type of the metadata.</param>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.AppServerMetadataTypeAttribute.MetadataType">
+            <summary>
+            Gets the type of the metadata.
             </summary>
             <value>
+            The type of the metadata.
+            </value>
+        </member>
+        <member name="T:SuperSocket.SocketBase.Metadata.CommandFilterAttribute">
+            <summary>
+            Command filter attribute
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Metadata.CommandFilterAttribute.OnCommandExecuting(SuperSocket.SocketBase.CommandExecutingContext)">
+            <summary>
+            Called when [command executing].
+            </summary>
+            <param name="commandContext">The command context.</param>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Metadata.CommandFilterAttribute.OnCommandExecuted(SuperSocket.SocketBase.CommandExecutingContext)">
+            <summary>
+            Called when [command executed].
+            </summary>
+            <param name="commandContext">The command context.</param>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.CommandFilterAttribute.Order">
+            <summary>
+            Gets or sets the execution order.
+            </summary>
+            <value>
+            The order.
+            </value>
+        </member>
+        <member name="T:SuperSocket.SocketBase.Metadata.DefaultAppServerMetadata">
+            <summary>
+            AppServer's default metadata type
+            </summary>
+        </member>
+        <member name="T:SuperSocket.SocketBase.Metadata.StatusInfoAttribute">
+            <summary>
+            StatusInfo Metadata
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.Metadata.StatusInfoAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.Metadata.StatusInfoAttribute"/> class.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.Key">
+            <summary>
+            Gets or sets the key.
+            </summary>
+            <value>
+            The key.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.ShortName">
+            <summary>
+            Gets or sets the short name.
+            </summary>
+            <value>
+            The short name.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.Format">
+            <summary>
+            Gets or sets the format.
+            </summary>
+            <value>
+            The format.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.Order">
+            <summary>
+            Gets or sets the order.
+            </summary>
+            <value>
+            The order.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.OutputInPerfLog">
+            <summary>
+            Gets or sets a value indicating whether [output in perf log].
+            </summary>
+            <value>
+              <c>true</c> if [output in perf log]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Metadata.StatusInfoAttribute.DataType">
+            <summary>
+            Gets or sets the type of the data.
+            </summary>
+            <value>
+            The type of the data.
+            </value>
+        </member>
+        <member name="T:SuperSocket.SocketBase.Metadata.StatusInfoKeys">
+            <summary>
+            Server StatusInfo Metadata
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.StartedTime">
+            <summary>
+            The started time.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.IsRunning">
+            <summary>
+            	<c>true</c> if this instance is running; otherwise, <c>false</c>.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.TotalConnections">
+            <summary>
+            The total count of the connections.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MaxConnectionNumber">
+            <summary>
+            The max connection number.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.TotalHandledRequests">
+            <summary>
+            The total handled requests count.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.RequestHandlingSpeed">
+            <summary>
+            Gets or sets the request handling speed, per second.
+            </summary>
+            <value>
+            The request handling speed.
+            </value>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.Listeners">
+            <summary>
+            Gets or sets the listeners.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.AvialableSendingQueueItems">
+            <summary>
+            The avialable sending queue items.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.TotalSendingQueueItems">
+            <summary>
+            The total sending queue items.
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.CpuUsage">
+            <summary>
             The cpu usage.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.NodeSummary.WorkingSet">
-            <summary>
-            Gets or sets the working set.
             </summary>
-            <value>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.WorkingSet">
+            <summary>
             The working set.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.NodeSummary.TotalThreadCount">
-            <summary>
-            Gets or sets the total thread count.
             </summary>
-            <value>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.TotalThreadCount">
+            <summary>
             The total thread count.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.NodeSummary.AvailableWorkingThreads">
-            <summary>
-            Gets or sets the available working threads.
             </summary>
-            <value>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.AvailableWorkingThreads">
+            <summary>
             The available working threads.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.NodeSummary.AvailableCompletionPortThreads">
-            <summary>
-            Gets or sets the available completion port threads.
             </summary>
-            <value>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.AvailableCompletionPortThreads">
+            <summary>
             The available completion port threads.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.NodeSummary.MaxWorkingThreads">
-            <summary>
-            Gets or sets the max working threads.
             </summary>
-            <value>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MaxWorkingThreads">
+            <summary>
             The max working threads.
-            </value>
+            </summary>
         </member>
-        <member name="P:SuperSocket.SocketBase.NodeSummary.MaxCompletionPortThreads">
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MaxCompletionPortThreads">
             <summary>
-            Gets or sets the max completion port threads.
+            The max completion port threads.
+            </summary>
+        </member>
+        <member name="T:SuperSocket.SocketBase.NodeStatus">
+            <summary>
+            The status of one SuperSocket node (one installation or deployment)
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.NodeStatus.Save(System.String)">
+            <summary>
+            Saves the specified file path.
+            </summary>
+            <param name="filePath">The file path.</param>
+        </member>
+        <member name="M:SuperSocket.SocketBase.NodeStatus.LoadFrom(System.String)">
+            <summary>
+            Loads a NodeStatus instance from a file.
+            </summary>
+            <param name="filePath">The file path.</param>
+            <returns></returns>
+        </member>
+        <member name="P:SuperSocket.SocketBase.NodeStatus.BootstrapStatus">
+            <summary>
+            Gets or sets the bootstrap status.
             </summary>
             <value>
-            The max completion port threads.
+            The bootstrap status.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.NodeStatus.InstancesStatus">
+            <summary>
+            Gets or sets the status of all server instances running in this node.
+            </summary>
+            <value>
+            The instances status.
             </value>
         </member>
         <member name="T:SuperSocket.SocketBase.Protocol.BasicRequestInfoParser">
@@ -4426,12 +4626,6 @@
             <param name="length">The length of the current received data.</param>
             <param name="toBeCopied">if set to <c>true</c> [to be copied].</param>
             <param name="rest">The rest, the length of the data which hasn't been parsed.</param>
-            <returns></returns>
-        </member>
-        <member name="M:SuperSocket.SocketBase.Protocol.ReceiveFilterBase`1.GetLeftBuffer">
-            <summary>
-            Gets the rest buffer.
-            </summary>
             <returns></returns>
         </member>
         <member name="M:SuperSocket.SocketBase.Protocol.ReceiveFilterBase`1.AddArraySegment(System.Byte[],System.Int32,System.Int32,System.Boolean)">
@@ -4834,99 +5028,6 @@
             In stopping
             </summary>
         </member>
-        <member name="T:SuperSocket.SocketBase.ServerSummary">
-            <summary>
-            Server State
-            </summary>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.Name">
-            <summary>
-            Gets or sets the name.
-            </summary>
-            <value>
-            The name.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.CollectedTime">
-            <summary>
-            Gets or sets the collected time.
-            </summary>
-            <value>
-            The collected time.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.StartedTime">
-            <summary>
-            Gets or sets the started time.
-            </summary>
-            <value>
-            The started time.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.IsRunning">
-            <summary>
-            Gets or sets a value indicating whether this instance is running.
-            </summary>
-            <value>
-            	<c>true</c> if this instance is running; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.TotalConnections">
-            <summary>
-            Gets or sets the total count of the connections.
-            </summary>
-            <value>
-            The total count of the connections.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.MaxConnectionNumber">
-            <summary>
-            Gets or sets the maximum allowed connection number.
-            </summary>
-            <value>
-            The max connection number.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.TotalHandledRequests">
-            <summary>
-            Gets or sets the total handled requests count.
-            </summary>
-            <value>
-            The total handled requests count.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.RequestHandlingSpeed">
-            <summary>
-            Gets or sets the request handling speed, per second.
-            </summary>
-            <value>
-            The request handling speed.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.Listeners">
-            <summary>
-            Gets or sets the listeners.
-            </summary>
-            <value>
-            The listeners.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.AvialableSendingQueueItems">
-            <summary>
-            Gets or sets the avialable sending queue items.
-            </summary>
-            <value>
-            The avialable sending queue items.
-            </value>
-        </member>
-        <member name="P:SuperSocket.SocketBase.ServerSummary.TotalSendingQueueItems">
-            <summary>
-            Gets or sets the total sending queue items.
-            </summary>
-            <value>
-            The total sending queue items.
-            </value>
-        </member>
         <member name="T:SuperSocket.SocketBase.SessionHandler`1">
             <summary>
             Used for session level event handler
@@ -4957,6 +5058,62 @@
             <summary>
             Udp mode
             </summary>
+        </member>
+        <member name="T:SuperSocket.SocketBase.StatusInfoCollection">
+            <summary>
+            Status information collection
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.StatusInfoCollection.GetValue``1(System.String,``0)">
+            <summary>
+            Gets the value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="name">The name.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns></returns>
+        </member>
+        <member name="P:SuperSocket.SocketBase.StatusInfoCollection.Values">
+            <summary>
+            Gets the values.
+            </summary>
+            <value>
+            The values.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.StatusInfoCollection.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.StatusInfoCollection.Tag">
+            <summary>
+            Gets or sets the tag.
+            </summary>
+            <value>
+            The tag.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.StatusInfoCollection.CollectedTime">
+            <summary>
+            Gets or sets the collected time.
+            </summary>
+            <value>
+            The collected time.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.StatusInfoCollection.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:System.Object"/> with the specified name.
+            </summary>
+            <value>
+            The <see cref="T:System.Object"/>.
+            </value>
+            <param name="name">The name.</param>
+            <returns></returns>
         </member>
     </members>
 </doc>
