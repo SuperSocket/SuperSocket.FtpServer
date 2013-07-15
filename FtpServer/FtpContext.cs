@@ -10,6 +10,11 @@ namespace SuperSocket.Ftp.FtpService
 {
     public class FtpContext
     {
+        public FtpContext()
+        {
+            Charset = Encoding.ASCII;
+        }
+
         private FtpUser m_User = new FtpUser();
 
         public FtpUser User

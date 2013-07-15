@@ -239,8 +239,6 @@ namespace SuperSocket.Ftp.FtpService
             if (list == null || list.Count <= 0)
                 return;
 
-            byte[] data = new byte[0];
-
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < list.Count; i++)
@@ -263,7 +261,7 @@ namespace SuperSocket.Ftp.FtpService
 
                 sb.Append(DELIM);
 
-                sb.Append(GetFixedLength(list[i].Length));
+                sb.Append(GetFixedLength(list[i].Length));]
 
                 sb.Append(DELIM);
 
@@ -275,7 +273,7 @@ namespace SuperSocket.Ftp.FtpService
 
                 sb.Append(NEWLINE);
 
-                data = context.Charset.GetBytes(sb.ToString());
+                byte[] data = context.Charset.GetBytes(sb.ToString());
                 stream.Write(data, 0, data.Length);
 
                 sb.Remove(0, sb.Length);

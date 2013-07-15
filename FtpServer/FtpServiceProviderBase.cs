@@ -621,30 +621,19 @@ namespace SuperSocket.Ftp.FtpService
             if (!virtualPath.StartsWith("/"))
                 virtualPath = Path.Combine(context.CurrentPath, virtualPath);
 
-            virtualPath = SuperSocket.Ftp.FtpCommon.StringUtil.ReverseSlash(virtualPath, '/');
-            virtualPath = virtualPath.TrimStart('\\');
+            //Windows path
+            if (Path.DirectorySeparatorChar == '\\')
+            {
+                virtualPath = SuperSocket.Ftp.FtpCommon.StringUtil.ReverseSlash(virtualPath, '/');
+            }
 
             return GetStoragePathInternal(context, virtualPath);
         }
 
         protected virtual string GetStoragePathInternal(FtpContext context, string virtualPath)
         {
+            virtualPath = virtualPath.TrimStart(Path.DirectorySeparatorChar);
             return Path.Combine(context.User.Root, virtualPath);
-        }
-
-        protected string CombinePath(string root, string relativePath)
-        {
-            if (root.EndsWith("\\", StringComparison.Ordinal))
-            {
-                root = root.Substring(0, root.Length - 1);
-            }
-
-            if (!relativePath.StartsWith("\\", StringComparison.Ordinal))
-            {
-                relativePath = "\\" + relativePath;
-            }
-
-            return root + relativePath;
         }
 
         protected long GetDirectorySize(string dir)

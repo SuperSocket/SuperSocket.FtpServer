@@ -42,14 +42,18 @@ namespace SuperSocket.Ftp.FtpService.Command
                 {
                     dataConn.SendResponse(session.Context, list);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     session.Send(FtpCoreResource.DataConnectionCannotOpen_420);
+                    session.Logger.Error(e);
                     return;
                 }
-
-                session.Context.User.DecreaseConnection();
-                session.CloseDataConnection(dataConn);
+                finally
+                {
+                    session.Context.User.DecreaseConnection();
+                    session.CloseDataConnection(dataConn);
+                }
+                
                 session.Send(FtpCoreResource.DataTransferComplete_226);
             }
             else
