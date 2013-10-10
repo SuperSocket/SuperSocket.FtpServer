@@ -236,6 +236,7 @@ namespace SuperSocket.Ftp.FtpService
             }
             else
             {
+                AppServer.Logger.ErrorFormat("{0} was not found.", dir);
                 context.SetError(FtpCoreResource.NotFound_550);
                 return null;
             }
@@ -619,7 +620,12 @@ namespace SuperSocket.Ftp.FtpService
         protected string GetStoragePath(FtpContext context, string virtualPath)
         {
             if (!virtualPath.StartsWith("/"))
-                virtualPath = Path.Combine(context.CurrentPath, virtualPath);
+            {
+                if (context.CurrentPath != "/")
+                    virtualPath = context.CurrentPath + "/" + virtualPath;
+                else
+                    virtualPath = context.CurrentPath + virtualPath;
+            }
 
             //Windows path
             if (Path.DirectorySeparatorChar == '\\')
