@@ -24,6 +24,21 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
+            if (!path.StartsWith("/"))
+            {
+                var context = session.Context;
+                var currentPath = context.CurrentPath;
+
+                if (currentPath == "/")
+                {
+                    path = currentPath + path;
+                }
+                else
+                {
+                    path = currentPath + "/" + path;
+                }
+            }
+
             long folderID;
 
             if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, path, out folderID))
