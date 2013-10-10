@@ -40,6 +40,8 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (result == AuthenticationResult.Success)
             {
+                session.FailedLogInTimes = 0;
+
                 if (session.AppServer.Logon(session.Context, user))
                 {
                     session.Send(FtpCoreResource.LoggedIn_230);
@@ -53,7 +55,12 @@ namespace SuperSocket.Ftp.FtpService.Command
             }
             else
             {
+                session.FailedLogInTimes++;
                 session.Send(FtpCoreResource.AuthenticationFailed_530);
+
+                //Exceed max allowed failed login times, close the connection
+                if(session.FailedLogInTimes >= session.AppServer.MaxFailedLogInTimes)
+                    session.Close();
             }
         }
 

@@ -22,6 +22,8 @@ namespace SuperSocket.Ftp.FtpService
 
         public bool Logged { get; internal set; }
 
+        internal int FailedLogInTimes { get; set; }
+
         protected override void OnInit()
         {
             base.OnInit();

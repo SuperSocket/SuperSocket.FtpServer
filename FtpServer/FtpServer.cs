@@ -35,6 +35,8 @@ namespace SuperSocket.Ftp.FtpService
 
         public FtpServiceProviderBase FtpServiceProvider { get; private set; }
 
+        internal int MaxFailedLogInTimes { get; private set; }
+
         private bool SetupFtpProvider(IRootConfig rootConfig, IServerConfig config)
         {
             var providerType = config.Options.GetValue("ftpProviderType");
@@ -122,6 +124,16 @@ namespace SuperSocket.Ftp.FtpService
 
         protected override bool Setup(IRootConfig rootConfig, IServerConfig config)
         {
+            int maxFailedLogInTimes;
+
+            if (!int.TryParse(config.Options.GetValue("maxFailedLogInTimes", "5"), out maxFailedLogInTimes))
+            {
+                Logger.ErrorFormat("Invalid configuration attribute 'maxFailedLogInTimes'.");
+                return false;
+            }
+
+            MaxFailedLogInTimes = maxFailedLogInTimes;
+
             if (!SetupFtpProvider(rootConfig, config))
                 return false;
 
