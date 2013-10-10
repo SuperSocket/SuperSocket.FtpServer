@@ -261,7 +261,7 @@ namespace SuperSocket.Ftp.FtpService
 
                 sb.Append(DELIM);
 
-                sb.Append(GetFixedLength(list[i].Length));]
+                sb.Append(GetFixedLength(list[i].Length));
 
                 sb.Append(DELIM);
 
