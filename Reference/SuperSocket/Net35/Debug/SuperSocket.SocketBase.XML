@@ -290,6 +290,18 @@
             <param name="sslPolicyErrors">The SSL policy errors.</param>
             <returns></returns>
         </member>
+        <member name="T:SuperSocket.SocketBase.IActiveConnector">
+            <summary>
+            The inerface to connect the remote endpoint actively
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IActiveConnector.ActiveConnect(System.Net.EndPoint)">
+            <summary>
+            Connect the target endpoint actively.
+            </summary>
+            <param name="targetEndPoint">The target end point.</param>
+            <returns></returns>
+        </member>
         <member name="F:SuperSocket.SocketBase.AppServerBase`2.NullAppSession">
             <summary>
             Null appSession instance
@@ -373,6 +385,13 @@
             <param name="bootstrap">The bootstrap.</param>
             <param name="config">The socket server instance config.</param>
             <param name="factories">The factories.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SetupCommandLoaders(System.Collections.Generic.List{SuperSocket.SocketBase.Command.ICommandLoader{SuperSocket.SocketBase.Command.ICommand{`0,`1}}})">
+            <summary>
+            Setups the command loaders.
+            </summary>
+            <param name="commandLoaders">The command loaders.</param>
             <returns></returns>
         </member>
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.CreateLogger(System.String)">
@@ -566,6 +585,36 @@
             Gets all sessions in sessions snapshot.
             </summary>
         </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.GetFilePath(System.String)">
+            <summary>
+            Gets the physical file path by the relative file path,
+            search both in the appserver's root and in the supersocket root dir if the isolation level has been set other than 'None'.
+            </summary>
+            <param name="relativeFilePath">The relative file path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#IActiveConnector#ActiveConnect(System.Net.EndPoint)">
+            <summary>
+            Connect the remote endpoint actively.
+            </summary>
+            <param name="targetEndPoint">The target end point.</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">This server cannot support active connect.</exception>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#ISystemEndPoint#TransferSystemMessage(System.String,System.Object)">
+            <summary>
+            Transfers the system message
+            </summary>
+            <param name="messageType">Type of the message.</param>
+            <param name="messageData">The message data.</param>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnSystemMessageReceived(System.String,System.Object)">
+            <summary>
+            Called when [system message received].
+            </summary>
+            <param name="messageType">Type of the message.</param>
+            <param name="messageData">The message data.</param>
+        </member>
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.UpdateServerStatus(SuperSocket.SocketBase.StatusInfoCollection)">
             <summary>
             Updates the summary of the server.
@@ -583,20 +632,6 @@
             <summary>
             Releases unmanaged and - optionally - managed resources
             </summary>
-        </member>
-        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#ISystemEndPoint#TransferSystemMessage(System.String,System.Object)">
-            <summary>
-            Transfers the system message
-            </summary>
-            <param name="messageType">Type of the message.</param>
-            <param name="messageData">The message data.</param>
-        </member>
-        <member name="M:SuperSocket.SocketBase.AppServerBase`2.OnSystemMessageReceived(System.String,System.Object)">
-            <summary>
-            Called when [system message received].
-            </summary>
-            <param name="messageType">Type of the message.</param>
-            <param name="messageData">The message data.</param>
         </member>
         <member name="P:SuperSocket.SocketBase.AppServerBase`2.Config">
             <summary>
@@ -1432,82 +1467,85 @@
             Gets the name.
             </summary>
         </member>
-        <member name="T:SuperSocket.SocketBase.Command.CommandLoaderBase">
+        <member name="T:SuperSocket.SocketBase.Command.CommandLoaderBase`1">
             <summary>
             CommandLoader base class
             </summary>
         </member>
-        <member name="T:SuperSocket.SocketBase.Command.ICommandLoader">
+        <member name="T:SuperSocket.SocketBase.Command.ICommandLoader`1">
             <summary>
             Command loader's interface
             </summary>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.ICommandLoader.Initialize``1(SuperSocket.SocketBase.Config.IRootConfig,SuperSocket.SocketBase.IAppServer)">
+        <member name="T:SuperSocket.SocketBase.Command.ICommandLoader">
             <summary>
-            Initializes the command loader
+            the empty basic interface for command loader
             </summary>
-            <typeparam name="TCommand">The type of the command.</typeparam>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Command.ICommandLoader`1.Initialize(SuperSocket.SocketBase.Config.IRootConfig,SuperSocket.SocketBase.IAppServer)">
+            <summary>
+            Initializes the command loader by the root config and the server instance.
+            </summary>
             <param name="rootConfig">The root config.</param>
             <param name="appServer">The app server.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.ICommandLoader.TryLoadCommands(System.Collections.Generic.IEnumerable{SuperSocket.SocketBase.Command.ICommand}@)">
+        <member name="M:SuperSocket.SocketBase.Command.ICommandLoader`1.TryLoadCommands(System.Collections.Generic.IEnumerable{`0}@)">
             <summary>
             Tries to load commands.
             </summary>
             <param name="commands">The commands.</param>
             <returns></returns>
         </member>
-        <member name="E:SuperSocket.SocketBase.Command.ICommandLoader.Updated">
+        <member name="E:SuperSocket.SocketBase.Command.ICommandLoader`1.Updated">
             <summary>
             Occurs when [updated].
             </summary>
         </member>
-        <member name="E:SuperSocket.SocketBase.Command.ICommandLoader.Error">
+        <member name="E:SuperSocket.SocketBase.Command.ICommandLoader`1.Error">
             <summary>
             Occurs when [error].
             </summary>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase.Initialize``1(SuperSocket.SocketBase.Config.IRootConfig,SuperSocket.SocketBase.IAppServer)">
+        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase`1.Initialize(SuperSocket.SocketBase.Config.IRootConfig,SuperSocket.SocketBase.IAppServer)">
             <summary>
-            Initializes the command loader
+            Initializes the command loader by the root config and appserver instance.
             </summary>
-            <typeparam name="TCommand">The type of the command.</typeparam>
             <param name="rootConfig">The root config.</param>
             <param name="appServer">The app server.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase.TryLoadCommands(System.Collections.Generic.IEnumerable{SuperSocket.SocketBase.Command.ICommand}@)">
+        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase`1.TryLoadCommands(System.Collections.Generic.IEnumerable{`0}@)">
             <summary>
             Tries to load commands.
             </summary>
             <param name="commands">The commands.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase.OnUpdated(System.Collections.Generic.IEnumerable{SuperSocket.SocketBase.Command.CommandUpdateInfo{SuperSocket.SocketBase.Command.ICommand}})">
+        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase`1.OnUpdated(System.Collections.Generic.IEnumerable{SuperSocket.SocketBase.Command.CommandUpdateInfo{`0}})">
             <summary>
             Called when [updated].
             </summary>
             <param name="commands">The commands.</param>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase.OnError(System.String)">
+        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase`1.OnError(System.String)">
             <summary>
             Called when [error].
             </summary>
             <param name="message">The message.</param>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase.OnError(System.Exception)">
+        <member name="M:SuperSocket.SocketBase.Command.CommandLoaderBase`1.OnError(System.Exception)">
             <summary>
             Called when [error].
             </summary>
             <param name="e">The e.</param>
         </member>
-        <member name="E:SuperSocket.SocketBase.Command.CommandLoaderBase.Updated">
+        <member name="E:SuperSocket.SocketBase.Command.CommandLoaderBase`1.Updated">
             <summary>
             Occurs when [updated].
             </summary>
         </member>
-        <member name="E:SuperSocket.SocketBase.Command.CommandLoaderBase.Error">
+        <member name="E:SuperSocket.SocketBase.Command.CommandLoaderBase`1.Error">
             <summary>
             Occurs when [error].
             </summary>
@@ -1596,21 +1634,25 @@
             Gets the name.
             </summary>
         </member>
-        <member name="T:SuperSocket.SocketBase.Command.ReflectCommandLoader">
+        <member name="T:SuperSocket.SocketBase.Command.ReflectCommandLoader`1">
             <summary>
             A command loader which loads commands from assembly by reflection
             </summary>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.ReflectCommandLoader.Initialize``1(SuperSocket.SocketBase.Config.IRootConfig,SuperSocket.SocketBase.IAppServer)">
+        <member name="M:SuperSocket.SocketBase.Command.ReflectCommandLoader`1.#ctor">
             <summary>
-            Initializes the command loader
+            Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.Command.ReflectCommandLoader`1"/> class.
             </summary>
-            <typeparam name="TCommand">The type of the command.</typeparam>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Command.ReflectCommandLoader`1.Initialize(SuperSocket.SocketBase.Config.IRootConfig,SuperSocket.SocketBase.IAppServer)">
+            <summary>
+            Initializes the command loader by the root config and the server instance.
+            </summary>
             <param name="rootConfig">The root config.</param>
             <param name="appServer">The app server.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.Command.ReflectCommandLoader.TryLoadCommands(System.Collections.Generic.IEnumerable{SuperSocket.SocketBase.Command.ICommand}@)">
+        <member name="M:SuperSocket.SocketBase.Command.ReflectCommandLoader`1.TryLoadCommands(System.Collections.Generic.IEnumerable{`0}@)">
             <summary>
             Tries to load commands.
             </summary>
@@ -2307,6 +2349,16 @@
             Default send timeout value, in milliseconds
             </summary>
         </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultClearIdleSessionInterval">
+            <summary>
+            Default clear idle session interval
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultIdleSessionTimeOut">
+            <summary>
+            Default idle session timeout
+            </summary>
+        </member>
         <member name="M:SuperSocket.SocketBase.Config.ServerConfig.#ctor(SuperSocket.SocketBase.Config.IServerConfig)">
             <summary>
             Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.Config.ServerConfig"/> class.
@@ -2649,6 +2701,27 @@
             <param name="serverType">Type of the server.</param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:SuperSocket.SocketBase.ActiveConnectResult">
+            <summary>
+            Active connect result model
+            </summary>
+        </member>
+        <member name="P:SuperSocket.SocketBase.ActiveConnectResult.Result">
+            <summary>
+            Gets or sets a value indicating whether the conecting is sucessfull
+            </summary>
+            <value>
+              <c>true</c> if result; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.ActiveConnectResult.Session">
+            <summary>
+            Gets or sets the connected session.
+            </summary>
+            <value>
+            The connected session.
+            </value>
         </member>
         <member name="T:SuperSocket.SocketBase.StartResult">
             <summary>
@@ -4176,6 +4249,41 @@
             Server StatusInfo Metadata
             </summary>
         </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.CpuUsage">
+            <summary>
+            The cpu usage
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MemoryUsage">
+            <summary>
+            The memory usage
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.TotalThreadCount">
+            <summary>
+            The total thread count
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.AvailableWorkingThreads">
+            <summary>
+            The available working threads count
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.AvailableCompletionPortThreads">
+            <summary>
+            The available completion port threads count
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MaxWorkingThreads">
+            <summary>
+            The max working threads count
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MaxCompletionPortThreads">
+            <summary>
+            The max completion port threads count
+            </summary>
+        </member>
         <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.StartedTime">
             <summary>
             The started time.
@@ -4222,41 +4330,6 @@
         <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.TotalSendingQueueItems">
             <summary>
             The total sending queue items.
-            </summary>
-        </member>
-        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.CpuUsage">
-            <summary>
-            The cpu usage.
-            </summary>
-        </member>
-        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.WorkingSet">
-            <summary>
-            The working set.
-            </summary>
-        </member>
-        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.TotalThreadCount">
-            <summary>
-            The total thread count.
-            </summary>
-        </member>
-        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.AvailableWorkingThreads">
-            <summary>
-            The available working threads.
-            </summary>
-        </member>
-        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.AvailableCompletionPortThreads">
-            <summary>
-            The available completion port threads.
-            </summary>
-        </member>
-        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MaxWorkingThreads">
-            <summary>
-            The max working threads.
-            </summary>
-        </member>
-        <member name="F:SuperSocket.SocketBase.Metadata.StatusInfoKeys.MaxCompletionPortThreads">
-            <summary>
-            The max completion port threads.
             </summary>
         </member>
         <member name="T:SuperSocket.SocketBase.NodeStatus">
@@ -4868,6 +4941,14 @@
             Creates the export type instance.
             </summary>
             <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Provider.ExportFactory.CreateExport``1(System.Func{System.Type,System.Object})">
+            <summary>
+            Creates the export type instance from the instance creator.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="creator">The creator.</param>
             <returns></returns>
         </member>
         <member name="P:SuperSocket.SocketBase.Provider.ExportFactory.TypeName">

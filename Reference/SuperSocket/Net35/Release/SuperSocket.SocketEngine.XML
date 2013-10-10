@@ -21,6 +21,14 @@
               <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="RemotingConfiguration, Infrastructure" />
               </PermissionSet>
         </member>
+        <member name="P:SuperSocket.SocketEngine.IsolationAppServer.StatusMetadataExtended">
+            <summary>
+            Gets a value indicating whether [status metadata extended].
+            </summary>
+            <value>
+            <c>true</c> if [status metadata extended]; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="M:SuperSocket.SocketEngine.AppDomainAppServer.#ctor(System.String,SuperSocket.SocketBase.Metadata.StatusInfoAttribute[])">
             <summary>
             Initializes a new instance of the <see cref="T:SuperSocket.SocketEngine.AppDomainAppServer"/> class.
