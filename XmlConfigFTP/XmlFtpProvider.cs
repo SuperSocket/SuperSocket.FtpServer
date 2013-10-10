@@ -35,7 +35,7 @@ namespace SuperSocket.Ftp.XmlConfigFTP
 
             try
             {
-                users = XmlSerializerUtil.Deserialize<List<FtpUser>>(m_UserSettingFile);
+                users = XmlSerializerUtil.Deserialize<List<FtpUser>>(server.GetFilePath(m_UserSettingFile));
             }
             catch (Exception e)
             {
