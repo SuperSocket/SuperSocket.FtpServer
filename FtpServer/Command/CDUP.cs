@@ -26,6 +26,10 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             string path = StringUtil.GetParentDirectory(session.Context.CurrentPath, '/');
 
+            //No parent path, so it's root
+            if (string.IsNullOrEmpty(path))
+                path = "/";
+
             long folderID;
 
             if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, path, out folderID))
