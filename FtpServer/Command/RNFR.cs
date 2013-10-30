@@ -24,15 +24,13 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
-            long folderID = 0;
-
             if (session.AppServer.FtpServiceProvider.IsExistFile(session.Context, filepath))
             {
                 session.Context.RenameFor = filepath;
                 session.Context.RenameItemType = ItemType.File;
                 session.Send(FtpCoreResource.RenameForOk_350);
             }
-            else if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, filepath, out folderID))
+            else if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, filepath))
             {
                 session.Context.RenameFor = filepath;
                 session.Context.RenameItemType = ItemType.Folder;

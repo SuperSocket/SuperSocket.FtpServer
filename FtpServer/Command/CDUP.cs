@@ -30,15 +30,9 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (string.IsNullOrEmpty(path))
                 path = "/";
 
-            long folderID;
-
-            if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, path, out folderID))
+            if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, path))
             {
                 session.Context.CurrentPath = path;
-
-                if (folderID > 0)
-                    session.Context.CurrentFolderID = folderID;
-
                 session.Send(string.Format(FtpCoreResource.ChangeDirectoryUp_250, path));
             }
             else

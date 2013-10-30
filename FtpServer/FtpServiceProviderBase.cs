@@ -364,10 +364,8 @@ namespace SuperSocket.Ftp.FtpService
             }
         }
 
-        public virtual bool IsExistFolder(FtpContext context, string path, out long folderID)
+        public virtual bool IsExistFolder(FtpContext context, string path)
         {
-            folderID = (long)path.GetHashCode();
-
             string dir = GetStoragePath(context, path);
 
             try

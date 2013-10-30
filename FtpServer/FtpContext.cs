@@ -48,14 +48,6 @@ namespace SuperSocket.Ftp.FtpService
             set { m_CurrentPath = value; }
         }
 
-        private long m_CurrentFolderID = 0;
-
-        public long CurrentFolderID
-        {
-            get { return m_CurrentFolderID; }
-            set { m_CurrentFolderID = value; }
-        }
-
         private string m_RenameFor = string.Empty;
 
         public string RenameFor

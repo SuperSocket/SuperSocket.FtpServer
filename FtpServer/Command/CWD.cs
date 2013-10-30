@@ -39,12 +39,9 @@ namespace SuperSocket.Ftp.FtpService.Command
                 }
             }
 
-            long folderID;
-
-            if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, path, out folderID))
+            if (session.AppServer.FtpServiceProvider.IsExistFolder(session.Context, path))
             {
                 session.Context.CurrentPath = path;
-                session.Context.CurrentFolderID = folderID;
                 session.Send(FtpCoreResource.ChangeWorkDirOk_250, path);
             }
             else
