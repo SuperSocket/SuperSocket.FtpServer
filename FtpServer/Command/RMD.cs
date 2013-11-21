@@ -25,7 +25,7 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (session.AppServer.FtpServiceProvider.RemoveFolder(session.Context, foldername))
             {
-                session.Send(FtpCoreResource.RemoveOk_250, session.Context.CurrentPath + "/" + foldername);
+                session.Send(FtpCoreResource.RemoveOk_250, CombinePath(session.Context.CurrentPath, foldername));
             }
             else
             {
@@ -34,5 +34,13 @@ namespace SuperSocket.Ftp.FtpService.Command
         }
 
         #endregion
+
+        private string CombinePath(string dir, string name)
+        {
+            if (dir.EndsWith("/"))
+                return dir + name;
+            else
+                return dir + "/" + name;
+        }
     }
 }
