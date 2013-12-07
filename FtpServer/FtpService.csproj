@@ -71,6 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AuthenticationResult.cs" />
     <Compile Include="Command\ABOR.cs" />
     <Compile Include="Command\ACCT.cs" />

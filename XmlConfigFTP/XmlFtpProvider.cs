@@ -14,8 +14,6 @@ namespace SuperSocket.Ftp.XmlConfigFTP
 {
     public class XmlFtpProvider : FtpServiceProviderBase
     {
-        private string m_UserSettingFile;
-
         private Dictionary<string, FtpUser> m_UserDict = new Dictionary<string, FtpUser>(StringComparer.OrdinalIgnoreCase);
         
         public override bool Init(FtpServer server, IServerConfig config)
@@ -23,9 +21,9 @@ namespace SuperSocket.Ftp.XmlConfigFTP
             if (!base.Init(server, config))
                 return false;
 
-            var m_UserSettingFile = config.Options.GetValue("userSetting");
+            var userSettingFile = config.Options.GetValue("userSetting");
 
-            if (string.IsNullOrEmpty(m_UserSettingFile))
+            if (string.IsNullOrEmpty(userSettingFile))
             {
                 server.Logger.Error("No user setting file defined!");
                 return false;
@@ -35,7 +33,7 @@ namespace SuperSocket.Ftp.XmlConfigFTP
 
             try
             {
-                users = XmlSerializerUtil.Deserialize<List<FtpUser>>(server.GetFilePath(m_UserSettingFile));
+                users = XmlSerializerUtil.Deserialize<List<FtpUser>>(server.GetFilePath(userSettingFile));
             }
             catch (Exception e)
             {
