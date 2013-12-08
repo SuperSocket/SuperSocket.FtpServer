@@ -70,10 +70,6 @@
       <Project>{E10F5B1A-7357-4024-AC75-FFD8AA12EDEF}</Project>
       <Name>FtpService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XmlConfigFTP\XmlConfigFTP.csproj">
-      <Project>{D3F550E7-E564-43FF-B8E8-182FE31AD5B0}</Project>
-      <Name>XmlConfigFTP</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\FtpUser.xml">

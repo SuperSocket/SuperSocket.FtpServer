@@ -44,10 +44,23 @@ namespace SuperSocket.Ftp.FtpService
 
             if (string.IsNullOrEmpty(providerType) && string.IsNullOrEmpty(providerTypeName))
             {
-                if (Logger.IsErrorEnabled)
-                    Logger.Error("Either ftpProviderType or ftpProviderName is required!");
+                try
+                {
+                    var ftpProvider = new XmlFtpProvider();
 
-                return false;
+                    if (!ftpProvider.Init(this, config))
+                        return false;
+
+                    FtpServiceProvider = ftpProvider;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    if (Logger.IsErrorEnabled)
+                        Logger.Error(e);
+
+                    return false;
+                }
             }
 
             if (!string.IsNullOrEmpty(providerType) && !string.IsNullOrEmpty(providerTypeName))

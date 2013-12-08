@@ -10,7 +10,7 @@ using SuperSocket.Ftp.FtpService;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
 
-namespace SuperSocket.Ftp.XmlConfigFTP
+namespace SuperSocket.Ftp.FtpService
 {
     public class XmlFtpProvider : FtpServiceProviderBase
     {
