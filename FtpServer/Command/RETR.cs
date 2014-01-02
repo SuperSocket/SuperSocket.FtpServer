@@ -26,17 +26,11 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
-            if (!session.Context.User.IncreaseConnection())
-            {
-                session.Send(FtpCoreResource.ReachedLoginLimit_421);
-                return;
-            }
-
-            DataConnection dataConn = session.CreateDataConnection();
+            DataConnection dataConn = session.DataConnection;
 
             try
             {
-                if (dataConn.RunDataConnection())
+                if (dataConn.RunDataConnection().Wait(60 * 1000))
                 {
                     session.Send(FtpCoreResource.DataConnectionAccepted_150);
                     if (session.AppServer.FtpServiceProvider.ReadFile(session.Context, filename, dataConn.GetStream(session.Context)))
@@ -60,8 +54,7 @@ namespace SuperSocket.Ftp.FtpService.Command
             }
             finally
             {
-                session.Context.User.DecreaseConnection();
-                session.CloseDataConnection(dataConn);
+                session.CloseDataConnection();
             }
         }
 

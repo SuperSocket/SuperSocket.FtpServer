@@ -33,38 +33,25 @@ namespace SuperSocket.Ftp.FtpService
 
         public override void Close()
         {
-            CloseAllDataConnection();
+            if (DataConnection != null)
+            {
+                DataConnection.Close();
+                DataConnection = null;
+            }
+
             base.Close();
         }
 
-        public int CurrentDataConnectionPort { get; set; }
-
-        private void CloseAllDataConnection()
+        internal void CloseDataConnection()
         {
-            for (int i = m_DataConnections.Count - 1; i >= 0; i--)
-            {
-                var c = m_DataConnections[i];
+            var dataConnection = DataConnection;
 
-                c.Close();
-
-                lock (m_DataConnsSyncRoot)
-                {
-                    m_DataConnections.RemoveAt(i);
-                }
-            }
-        }
-
-        internal void CloseDataConnection(DataConnection conn)
-        {
-            if (conn == null)
+            if (dataConnection == null)
                 return;
 
-            conn.Close();
+            dataConnection.Close();
 
-            lock (m_DataConnsSyncRoot)
-            {
-                m_DataConnections.Remove(conn);
-            }
+            DataConnection = null;
         }
 
         protected override void OnSessionStarted()
@@ -78,29 +65,7 @@ namespace SuperSocket.Ftp.FtpService
             Send(FtpCoreResource.InvalidArguments_501);
         }
 
-        private List<DataConnection> m_DataConnections = new List<DataConnection>();
-
-        private object m_DataConnsSyncRoot = new object();
-
-        internal IEnumerable<DataConnection> DataConnections
-        {
-            get { return m_DataConnections; }
-        }
-
-        internal DataConnection CurrentDataConnection { get; private set; }
-
-        internal DataConnection CreateDataConnection()
-        {
-            DataConnection dataConn = new DataConnection(this, CurrentDataConnectionPort);
-
-            lock (m_DataConnsSyncRoot)
-            {
-                CurrentDataConnection = dataConn;
-                m_DataConnections.Add(dataConn);
-            }
-
-            return dataConn;
-        }
+        internal DataConnection DataConnection { get; set; }
 
         protected override void HandleException(Exception e)
         {

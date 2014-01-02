@@ -14,7 +14,7 @@ namespace SuperSocket.Ftp.FtpService.Command
         {
             session.Context.ResetState();
             //Close current data connection?
-            session.CloseDataConnection(session.CurrentDataConnection);
+            session.CloseDataConnection();
             session.Send(FtpCoreResource.AbortOk_226);
         }
 

@@ -33,9 +33,10 @@ namespace SuperSocket.Ftp.FtpService.Command
             string ip = arrAddress[0] + "." + arrAddress[1] + "." + arrAddress[2] + "." + arrAddress[3];
             int port = (Convert.ToInt32(arrAddress[4]) << 8) | Convert.ToInt32(arrAddress[5]);
 
-            if (DataConnection.TrySocketPort(session, port))
+            DataConnection dataConnection;
+            if (DataConnection.TryOpenDataConnection(session, port, out dataConnection))
             {
-                session.CurrentDataConnectionPort = port;
+                session.DataConnection = dataConnection;
                 session.Send(FtpCoreResource.PortOk_220);
                 return;
             }

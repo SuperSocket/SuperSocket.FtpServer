@@ -27,15 +27,9 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
-            if (!session.Context.User.IncreaseConnection())
-            {
-                session.Send(FtpCoreResource.ReachedLoginLimit_421);
-                return;
-            }
+            DataConnection dataConn = session.DataConnection;
 
-            DataConnection dataConn = session.CreateDataConnection();
-
-            if (dataConn.RunDataConnection())
+            if (dataConn.RunDataConnection().Wait(60 * 1000))
             {
                 Stream stream = dataConn.GetStream(session.Context);
 
@@ -59,9 +53,13 @@ namespace SuperSocket.Ftp.FtpService.Command
                 }
                 finally
                 {
-                    session.Context.User.DecreaseConnection();
-                    session.CloseDataConnection(dataConn);
+                    session.CloseDataConnection();
                 }
+            }
+            else
+            {
+                session.CloseDataConnection();
+                session.Send(FtpCoreResource.DataConnectionCannotOpen_420);
             }
         }
 

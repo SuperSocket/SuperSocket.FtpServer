@@ -11,6 +11,7 @@ using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.Common;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
+using System.Threading.Tasks;
 
 
 namespace SuperSocket.Ftp.FtpService
@@ -36,6 +37,8 @@ namespace SuperSocket.Ftp.FtpService
         }
 
         public Socket Client { get; private set; }
+
+        private Socket m_Listener;
 
         public SslProtocols SecureProtocol { get; set; }
 
@@ -77,76 +80,24 @@ namespace SuperSocket.Ftp.FtpService
             }
         }
         
-        public DataConnection(FtpSession session, int port) //PORT
+        public DataConnection(FtpSession session, Socket listenSocket, int port)
         {
             m_Session = session;
             m_Address = session.Config.Ip;
             SecureProtocol = session.Context.DataSecureProtocol;
+            m_Listener = listenSocket;
             m_Port = port;
         }
 
-        public bool RunDataConnection()
+        public Task RunDataConnection()
         {
-            Socket listener = null;
-
-            try
-            {
-                IPAddress address;
-
-                if (string.IsNullOrEmpty(m_Address) || "Any".Equals(m_Address, StringComparison.OrdinalIgnoreCase))
-                    address = IPAddress.Any;
-                else
-                    address = IPAddress.Parse(m_Address);
-
-                IPEndPoint endPoint = new IPEndPoint(address, m_Port);
-                listener = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                listener.Bind(endPoint);
-                listener.Listen(100);
-
-                SocketAsyncEventArgs acceptEventArgs = new SocketAsyncEventArgs();
-                acceptEventArgs.Completed += new EventHandler<SocketAsyncEventArgs>(acceptEventArgs_Completed);
-                if (!listener.AcceptAsync(acceptEventArgs))
-                    ProcessAccept(acceptEventArgs);
-
-                if (this.Client == null)
-                {
-                    //Wait 60000 milliseconds = 1 minute
-                    int poolCount = 600;
-
-                    while (poolCount > 0)
-                    {
-                        Thread.Sleep(100);
-                        poolCount--;
-
-                        if (this.Client != null)
-                            break;
-                    }
-                }
-
-                if (this.Client != null)
-                {
-                    InitStream(m_Session.Context);
-                    return true;
-                }
-                else
-                {
-                    //Timeout, the client didn't connect server in time
-                    return false;
-                }
-            }
-            catch (Exception e)
-            {
-                m_Session.Logger.Error("Create dataconnection failed, " + m_Address + ", " + m_Port, e);
-                return false;
-            }
-            finally
-            {
-                if (listener != null)
-                {
-                    listener.Close();
-                    listener = null;
-                }
-            }
+            var taskSource = new TaskCompletionSource<bool>();
+            SocketAsyncEventArgs acceptEventArgs = new SocketAsyncEventArgs();
+            acceptEventArgs.UserToken = taskSource;
+            acceptEventArgs.Completed += new EventHandler<SocketAsyncEventArgs>(acceptEventArgs_Completed);
+            if (!m_Listener.AcceptAsync(acceptEventArgs))
+                ProcessAccept(acceptEventArgs);
+            return taskSource.Task;
         }
 
         void acceptEventArgs_Completed(object sender, SocketAsyncEventArgs e)
@@ -157,9 +108,41 @@ namespace SuperSocket.Ftp.FtpService
         void ProcessAccept(SocketAsyncEventArgs e)
         {
             this.Client = e.AcceptSocket;
+
+            var taskSource = e.UserToken as TaskCompletionSource<bool>;
+
+            try
+            {
+                InitStream(m_Session.Context);
+                taskSource.SetResult(true);
+            }
+            catch (Exception exc)
+            {
+                taskSource.SetException(exc);
+            }
+
+            StopListener();
         }
 
-        private static bool TrySocketPort(IPAddress address, int tryPort)
+        void StopListener()
+        {
+            if (m_Listener != null)
+            {
+                try
+                {
+                    m_Listener.Close();
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    m_Listener = null;
+                }
+            }
+        }
+
+        private static Socket TryListenSocketPort(IPAddress address, int tryPort)
         {
             Socket listener = null;
 
@@ -168,65 +151,76 @@ namespace SuperSocket.Ftp.FtpService
                 IPEndPoint endPoint = new IPEndPoint(address, tryPort);
                 listener = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 listener.Bind(endPoint);
-                listener.Listen(100);
-                return true;
+                listener.Listen(1);
+                return listener;
             }
             catch (Exception)
             {
-                return false;
-            }
-            finally
-            {
                 if (listener != null)
                 {
-                    listener.Close();
-                    listener = null;
+                    try
+                    {
+                        listener.Close();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
+
+                return null;
             }
         }
 
-        internal static bool TrySocketPort(FtpSession session, int port)
+        internal static bool TryOpenDataConnection(FtpSession session, int port, out DataConnection dataConnection)
         {
-            IPAddress address;
+            IPAddress ipAddress = session.LocalEndPoint.Address;
+            var listenSocket = TryListenSocketPort(ipAddress, port);
 
-            if (string.IsNullOrEmpty(session.Config.Ip) || "Any".Equals(session.Config.Ip, StringComparison.OrdinalIgnoreCase))
-                address = IPAddress.Any;
-            else
-                address = IPAddress.Parse(session.Config.Ip);
+            if (listenSocket != null)
+            {
+                dataConnection = new DataConnection(session, listenSocket, port);
+                return true;
+            }
 
-            return TrySocketPort(address, port);
+            dataConnection = null;
+            return false;
         }
 
-        internal static int GetPassivePort(FtpSession session)
+        internal static bool TryOpenDataConnection(FtpSession session, out DataConnection dataConnection)
         {
+            dataConnection = null;
+
             int tryPort = session.AppServer.FtpServiceProvider.GetRandomPort();
             int previousPort = tryPort;
             int tryTimes = 0;
 
-            IPAddress address;
+            IPAddress ipAddress = session.LocalEndPoint.Address;
 
-            if (string.IsNullOrEmpty(session.Config.Ip) || "Any".Equals(session.Config.Ip, StringComparison.OrdinalIgnoreCase))
-                address = IPAddress.Any;
-            else
-                address = IPAddress.Parse(session.Config.Ip);
-
-            while (!TrySocketPort(address, tryPort))
+            while (true)
             {
+                var listenSocket = TryListenSocketPort(ipAddress, tryPort);
+
+                if (listenSocket != null)
+                {
+                    dataConnection = new DataConnection(session, listenSocket, tryPort);
+                    return true;
+                }
+
                 tryTimes++;
+
                 if (tryTimes > 5)
                 {
-                    return 0;
+                    return false;
                 }
 
                 tryPort = session.AppServer.FtpServiceProvider.GetRandomPort();
 
                 if (previousPort == tryPort)
                 {
-                    return 0;
+                    return false;
                 }
             }
-
-            return tryPort;
         }
 
         private const string DELIM = " ";
@@ -301,6 +295,8 @@ namespace SuperSocket.Ftp.FtpService
 
         public virtual void Close()
         {
+            StopListener();
+
             if (Client != null && !m_IsClosed)
             {
                 try

@@ -21,14 +21,25 @@ namespace SuperSocket.Ftp.Test
 
 
         [Test]
-        public void TestConnection()
+        public void TestWorkFlow()
         {
             var config = SetupBootstrap("Basic.config");
 
-            using(var client = new FtpClient("kerry", "123456", "localhost"))
+            using(var client = new FtpClient())
             {
+                client.Host = "localhost";
+                client.InternetProtocolVersions = FtpIpVersion.IPv4;
+                client.Credentials = new NetworkCredential("kerry", "123456");
+                client.DataConnectionType = FtpDataConnectionType.PASV;
                 client.Connect();
-                Assert.AreEqual(true, client.Connected);
+                Assert.AreEqual(true, client.IsConnected);
+                var workDir = client.GetWorkingDirectory();
+                Assert.AreEqual("/", workDir);
+                Console.WriteLine("EncryptionMode: {0}", client.EncryptionMode);
+                foreach (var item in client.GetListing(workDir, FtpListOption.Size))
+                {
+                    Console.WriteLine(item.Name);
+                }
             }
         }
     }

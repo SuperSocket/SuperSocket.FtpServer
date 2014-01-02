@@ -26,15 +26,9 @@ namespace SuperSocket.Ftp.FtpService.Command
                 return;
             }
 
-            if (!session.Context.User.IncreaseConnection())
-            {
-                session.Send(FtpCoreResource.ReachedLoginLimit_421);
-                return;
-            }
+            DataConnection dataConn = session.DataConnection;
 
-            DataConnection dataConn = session.CreateDataConnection();
-
-            if (dataConn.RunDataConnection())
+            if (dataConn != null && dataConn.RunDataConnection().Wait(60 * 1000))
             {
                 session.Send(FtpCoreResource.DataConnectionAccepted_150);
 
@@ -50,15 +44,14 @@ namespace SuperSocket.Ftp.FtpService.Command
                 }
                 finally
                 {
-                    session.Context.User.DecreaseConnection();
-                    session.CloseDataConnection(dataConn);
+                    session.CloseDataConnection();
                 }
                 
                 session.Send(FtpCoreResource.DataTransferComplete_226);
             }
             else
             {
-                session.Context.User.DecreaseConnection();
+                session.CloseDataConnection();
                 session.Send(FtpCoreResource.DataConnectionCannotOpen_420);
             }
         }

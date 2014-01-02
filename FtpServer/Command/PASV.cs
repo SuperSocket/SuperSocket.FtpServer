@@ -16,12 +16,13 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
-            int port = DataConnection.GetPassivePort(session);
+            DataConnection dataConnection;
 
-            if (port > 0)
+            if (DataConnection.TryOpenDataConnection(session, out dataConnection))
             {
+                var port = dataConnection.Port;
                 string address = ((IPEndPoint)session.LocalEndPoint).Address.ToString().Replace('.', ',') + "," + (port >> 8) + "," + (port & 0xFF);
-                session.CurrentDataConnectionPort = port;
+                session.DataConnection = dataConnection;
                 session.Send(FtpCoreResource.PassiveEnter_227, address);
             }
             else
