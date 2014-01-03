@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Security;
@@ -7,11 +8,11 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading;
-using SuperSocket.Ftp.FtpService.Storage;
+using System.Threading.Tasks;
 using SuperSocket.Common;
+using SuperSocket.Ftp.FtpService.Storage;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
-using System.Threading.Tasks;
 
 
 namespace SuperSocket.Ftp.FtpService
@@ -226,6 +227,8 @@ namespace SuperSocket.Ftp.FtpService
         private const string DELIM = " ";
         private const string NEWLINE = "\r\n";
 
+        private static readonly CultureInfo m_DateTimeCulture = CultureInfo.GetCultureInfo("en-US");
+
         public void SendResponse(FtpContext context, List<ListItem> list)
         {
             Stream stream = GetStream(context);
@@ -279,9 +282,9 @@ namespace SuperSocket.Ftp.FtpService
         private string GetListTimeString(DateTime time)
         {
             if (time.Year == DateTime.Now.Year)
-                return time.ToString("MMM dd hh:mm");
+                return time.ToString("MMM dd hh:mm", m_DateTimeCulture);
             else
-                return time.ToString("MMM dd yyyy");
+                return time.ToString("MMM dd yyyy", m_DateTimeCulture);
         }
 
         private string GetFixedLength(long length)
