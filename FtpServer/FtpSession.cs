@@ -28,6 +28,7 @@ namespace SuperSocket.Ftp.FtpService
         {
             base.OnInit();
             Context = new FtpContext();
+            Context.Charset = this.Charset;
             Context.TempDirectory = this.AppServer.FtpServiceProvider.GetTempDirectory(this.SessionID);
         }
 

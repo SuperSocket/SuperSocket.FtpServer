@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Resources;
+using System.Text;
 using SuperSocket.Common;
 using SuperSocket.Ftp.FtpService.Command;
 using SuperSocket.Ftp.FtpService.Membership;
@@ -118,7 +119,11 @@ namespace SuperSocket.Ftp.FtpService
 
         private bool SetupResource(IServerConfig config)
         {
-            FeaturesResponse = string.Format(FtpCoreResource.FeaturesOk_221, string.Join("\r\n", m_ExtCommands));
+            var featureList = TextEncoding.CodePage == Encoding.UTF8.CodePage
+                    ? m_ExtCommands.Select(c => " " + c).Union(new string[] { " UTF-8" }).ToArray()
+                    : m_ExtCommands.Select(c => " " + c).ToArray();
+
+            FeaturesResponse = string.Format(FtpCoreResource.FeaturesOk_221, string.Join("\r\n", featureList));
             return true;
         }
 
