@@ -18,6 +18,11 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (!session.Logged)
                 return;
 
+            if (!string.IsNullOrEmpty(requestInfo.Body))
+            {
+                session.Context.CurrentPath = requestInfo.Body;
+            }
+
             List<ListItem> list = session.AppServer.FtpServiceProvider.GetList(session.Context);
 
             if (session.Context.Status == FtpStatus.Error)
