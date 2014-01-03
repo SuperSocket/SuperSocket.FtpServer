@@ -441,8 +441,9 @@ namespace SuperSocket.Ftp.FtpService
                     if (File.Exists(filePath))
                     {
                         FileInfo file = new FileInfo(filePath);
+                        var fileLength = file.Length;
                         File.Delete(filename);
-                        context.ChangeSpace(0 - file.Length);
+                        context.ChangeSpace(0 - fileLength);
                     }
 
                     fs = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.Write, bufLen);
