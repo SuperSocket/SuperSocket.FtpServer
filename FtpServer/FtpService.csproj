@@ -117,6 +117,7 @@
     <Compile Include="CreateUserResult.cs" />
     <Compile Include="DataConnection.cs" />
     <Compile Include="FtpContext.cs" />
+    <Compile Include="FtpPath.cs" />
     <Compile Include="FtpServer.cs" />
     <Compile Include="FtpServiceProviderBase.cs" />
     <Compile Include="FtpSession.cs" />

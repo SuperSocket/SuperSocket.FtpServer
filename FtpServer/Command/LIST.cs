@@ -20,7 +20,10 @@ namespace SuperSocket.Ftp.FtpService.Command
 
             if (!string.IsNullOrEmpty(requestInfo.Body))
             {
-                session.Context.CurrentPath = requestInfo.Body;
+                if (requestInfo.Body.StartsWith(FtpPath.Root))
+                    session.Context.CurrentPath = requestInfo.Body;
+                else
+                    session.Context.CurrentPath = FtpPath.Combine(session.Context.CurrentPath, requestInfo.Body);
             }
 
             List<ListItem> list = session.AppServer.FtpServiceProvider.GetList(session.Context);
