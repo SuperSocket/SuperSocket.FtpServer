@@ -149,7 +149,7 @@
             <param name="session">The session.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.IAppServer.GetAppSessionByID(System.String)">
+        <member name="M:SuperSocket.SocketBase.IAppServer.GetSessionByID(System.String)">
             <summary>
             Gets the app session by ID.
             </summary>
@@ -518,6 +518,13 @@
             <param name="socketSession">The socket session.</param>
             <returns></returns>
         </member>
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.CreateAppSession(SuperSocket.SocketBase.ISocketSession)">
+            <summary>
+            create a new TAppSession instance, you can override it to create the session instance in your own way
+            </summary>
+            <param name="socketSession">the socket session.</param>
+            <returns>the new created session instance</returns>
+        </member>
         <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#IAppServer#RegisterSession(SuperSocket.SocketBase.IAppSession)">
             <summary>
             Registers the new created app session into the appserver's session container.
@@ -560,14 +567,14 @@
             <param name="session">The appSession.</param>
             <param name="reason">The reason.</param>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppServerBase`2.GetAppSessionByID(System.String)">
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.GetSessionByID(System.String)">
             <summary>
             Gets the app session by ID.
             </summary>
             <param name="sessionID">The session ID.</param>
             <returns></returns>
         </member>
-        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#IAppServer#GetAppSessionByID(System.String)">
+        <member name="M:SuperSocket.SocketBase.AppServerBase`2.SuperSocket#SocketBase#IAppServer#GetSessionByID(System.String)">
             <summary>
             Gets the app session by ID.
             </summary>
@@ -798,6 +805,13 @@
             <returns></returns>
         </member>
         <member name="M:SuperSocket.SocketBase.AppServer`2.GetAppSessionByID(System.String)">
+            <summary>
+            Gets the app session by ID.
+            </summary>
+            <param name="sessionID">The session ID.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.AppServer`2.GetSessionByID(System.String)">
             <summary>
             Gets the app session by ID.
             </summary>
@@ -1103,14 +1117,14 @@
         </member>
         <member name="M:SuperSocket.SocketBase.AppSession`2.TrySend(System.Collections.Generic.IList{System.ArraySegment{System.Byte}})">
             <summary>
-            Try to send the data segments to clinet.
+            Try to send the data segments to client.
             </summary>
             <param name="segments">The segments.</param>
             <returns>Indicate whether the message was pushed into the sending queue; if it returns false, the sending queue may be full or the socket is not connected</returns>
         </member>
         <member name="M:SuperSocket.SocketBase.AppSession`2.Send(System.Collections.Generic.IList{System.ArraySegment{System.Byte}})">
             <summary>
-            Sends the data segments to clinet.
+            Sends the data segments to client.
             </summary>
             <param name="segments">The segments.</param>
         </member>
@@ -1408,6 +1422,22 @@
             Gets the current command.
             </summary>
         </member>
+        <member name="P:SuperSocket.SocketBase.CommandExecutingContext.Exception">
+            <summary>
+            Gets the exception.
+            </summary>
+            <value>
+            The exception.
+            </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.CommandExecutingContext.ExceptionHandled">
+            <summary>
+            Gets a value indicating whether [exception handled].
+            </summary>
+            <value>
+              <c>true</c> if [exception handled]; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="P:SuperSocket.SocketBase.CommandExecutingContext.Cancel">
             <summary>
             Gets or sets a value indicating whether this command executing is cancelled.
@@ -1634,6 +1664,17 @@
             Gets the name.
             </summary>
         </member>
+        <member name="T:SuperSocket.SocketBase.Command.ICommandFilterProvider">
+            <summary>
+            The basic interface for CommandFilter
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.Command.ICommandFilterProvider.GetFilters">
+            <summary>
+            Gets the filters which assosiated with this command object.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SuperSocket.SocketBase.Command.ReflectCommandLoader`1">
             <summary>
             A command loader which loads commands from assembly by reflection
@@ -1719,6 +1760,11 @@
             <c>true</c> if [client certificate required]; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="P:SuperSocket.SocketBase.Config.ICertificateConfig.KeyStorageFlags">
+            <summary>
+            Gets a value that will be used to instantiate the X509Certificate2 object in the CertificateManager
+            </summary>
+        </member>
         <member name="P:SuperSocket.SocketBase.Config.CertificateConfig.FilePath">
             <summary>
             Gets/sets the file path.
@@ -1757,6 +1803,11 @@
             <value>
             <c>true</c> if [client certificate required]; otherwise, <c>false</c>.
             </value>
+        </member>
+        <member name="P:SuperSocket.SocketBase.Config.CertificateConfig.KeyStorageFlags">
+            <summary>
+            Gets/sets a value that will be used to instantiate the X509Certificate2 object in the CertificateManager
+            </summary>
         </member>
         <member name="T:SuperSocket.SocketBase.Config.CommandAssemblyConfig">
             <summary>
@@ -2359,6 +2410,31 @@
             Default idle session timeout
             </summary>
         </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultSendBufferSize">
+            <summary>
+            The default send buffer size
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultSessionSnapshotInterval">
+            <summary>
+            The default session snapshot interval
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultKeepAliveTime">
+            <summary>
+            The default keep alive time
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultKeepAliveInterval">
+            <summary>
+            The default keep alive interval
+            </summary>
+        </member>
+        <member name="F:SuperSocket.SocketBase.Config.ServerConfig.DefaultListenBacklog">
+            <summary>
+            The default listen backlog
+            </summary>
+        </member>
         <member name="M:SuperSocket.SocketBase.Config.ServerConfig.#ctor(SuperSocket.SocketBase.Config.IServerConfig)">
             <summary>
             Initializes a new instance of the <see cref="T:SuperSocket.SocketBase.Config.ServerConfig"/> class.
@@ -2821,6 +2897,31 @@
             <value>
             The base directory.
             </value>
+        </member>
+        <member name="T:SuperSocket.SocketBase.IDynamicBootstrap">
+            <summary>
+            The bootstrap interface to support add new server instance in runtime
+            </summary>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IDynamicBootstrap.Add(SuperSocket.SocketBase.Config.IServerConfig)">
+            <summary>
+            Adds a new server into the bootstrap.
+            </summary>
+            <param name="config">The new server's config.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IDynamicBootstrap.AddAndStart(SuperSocket.SocketBase.Config.IServerConfig)">
+            <summary>
+            Adds a new server into the bootstrap and then start it.
+            </summary>
+            <param name="config">The new server's config.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SuperSocket.SocketBase.IDynamicBootstrap.Remove(System.String)">
+            <summary>
+            Removes the server instance which is specified by name.
+            </summary>
+            <param name="name">The name of the server instance to be removed.</param>
         </member>
         <member name="T:SuperSocket.SocketBase.IConnectionFilter">
             <summary>
