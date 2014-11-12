@@ -103,7 +103,12 @@ namespace SuperSocket.Ftp.FtpService
             return true;
         }
 
-        public virtual void OnServiceStop()
+        public virtual void OnStopped()
+        {
+
+        }
+
+        public virtual void OnStarted()
         {
 
         }
@@ -442,7 +447,7 @@ namespace SuperSocket.Ftp.FtpService
                     {
                         FileInfo file = new FileInfo(filePath);
                         var fileLength = file.Length;
-                        File.Delete(filename);
+                        File.Delete(filePath);
                         context.ChangeSpace(0 - fileLength);
                     }
 

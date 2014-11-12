@@ -161,6 +161,22 @@ namespace SuperSocket.Ftp.FtpService
             return true;
         }
 
+        protected override void OnStarted()
+        {
+            var ftpProvider = FtpServiceProvider;
+
+            if (ftpProvider != null)
+                ftpProvider.OnStarted();
+        }
+
+        protected override void OnStopped()
+        {
+            var ftpProvider = FtpServiceProvider;
+
+            if (ftpProvider != null)
+                ftpProvider.OnStopped();
+        }
+
 
         private object m_SyncRoot = new object();
 
