@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using SuperSocket.Common;
 using SuperSocket.Ftp.FtpCommon;
 using SuperSocket.Ftp.FtpService;
@@ -15,6 +16,14 @@ namespace SuperSocket.Ftp.FtpService
     public class XmlFtpProvider : FtpServiceProviderBase
     {
         private Dictionary<string, FtpUser> m_UserDict = new Dictionary<string, FtpUser>(StringComparer.OrdinalIgnoreCase);
+
+        private Timer m_UserConfigReadTimer;
+
+        private const int c_UserFileReadInterval = 60 * 1000 * 5; // 5 minutes
+
+        private DateTime m_LastUserFileLoadTime = DateTime.MinValue;
+
+        private string m_UserConfigFile;
         
         public override bool Init(FtpServer server, IServerConfig config)
         {
@@ -25,25 +34,68 @@ namespace SuperSocket.Ftp.FtpService
 
             if (string.IsNullOrEmpty(userSettingFile))
             {
-                server.Logger.Error("No user setting file defined!");
+                server.Logger.Error("No user setting file was not defined!");
                 return false;
             }
 
-            List<FtpUser> users;
+            if (!File.Exists(userSettingFile))
+            {
+                AppServer.Logger.Error("The userSetting file cannot be found!");
+                return false;
+            }
+
+            m_UserConfigFile = userSettingFile;
+
+            ReadUserConfigFile();
+
+            m_UserConfigReadTimer = new Timer(OnUserConfigReadTimerCallback, null, Timeout.Infinite, Timeout.Infinite);
+
+            return true;
+        }
+
+        public override void OnStarted()
+        {
+            m_UserConfigReadTimer.Change(c_UserFileReadInterval, c_UserFileReadInterval);
+            base.OnStarted();
+        }
+
+        public override void OnStopped()
+        {
+            m_UserConfigReadTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            base.OnStopped();
+        }
+
+        private void OnUserConfigReadTimerCallback(object state)
+        {
+            m_UserConfigReadTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
             try
             {
-                users = XmlSerializerUtil.Deserialize<List<FtpUser>>(server.GetFilePath(userSettingFile));
+                ReadUserConfigFile();
             }
             catch (Exception e)
             {
-                AppServer.Logger.Error("Failed to deserialize FtpUser list file!", e);
-                return false;
+                AppServer.Logger.Error("Failed to ReadUserConfigFile.", e);
             }
+
+            m_UserConfigReadTimer.Change(c_UserFileReadInterval, c_UserFileReadInterval);
+        }
+
+        private void ReadUserConfigFile()
+        {
+            if (!File.Exists(m_UserConfigFile))
+                return;
+
+            var lastFileWriteTime = File.GetLastWriteTime(m_UserConfigFile);
+
+            if (lastFileWriteTime <= m_LastUserFileLoadTime)
+                return;
+
+            var users = XmlSerializerUtil.Deserialize<List<FtpUser>>(m_UserConfigFile);
 
             m_UserDict = users.ToDictionary(u => u.UserName, u => u, StringComparer.OrdinalIgnoreCase);
 
-            return true;
+            m_LastUserFileLoadTime = lastFileWriteTime;
         }
 
         public override AuthenticationResult Authenticate(string username, string password, out FtpUser user)
