@@ -21,6 +21,8 @@ namespace SuperSocket.Ftp.FtpService
     {
         internal string FeaturesResponse { get; private set; }
 
+        internal string ExternalLocalAddress { get; private set; }
+
         public FtpServer()
         {
 
@@ -149,6 +151,8 @@ namespace SuperSocket.Ftp.FtpService
                 Logger.ErrorFormat("Invalid configuration attribute 'maxFailedLogInTimes'.");
                 return false;
             }
+
+            ExternalLocalAddress = config.Options.GetValue("externalLocalAddress");
 
             MaxFailedLogInTimes = maxFailedLogInTimes;
 

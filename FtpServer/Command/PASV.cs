@@ -21,7 +21,13 @@ namespace SuperSocket.Ftp.FtpService.Command
             if (DataConnection.TryOpenDataConnection(session, out dataConnection))
             {
                 var port = dataConnection.Port;
-                string address = ((IPEndPoint)session.LocalEndPoint).Address.ToString().Replace('.', ',') + "," + (port >> 8) + "," + (port & 0xFF);
+
+                var localAddress = session.AppServer.ExternalLocalAddress;
+
+                if(string.IsNullOrEmpty(localAddress))
+                    localAddress = ((IPEndPoint)session.LocalEndPoint).Address.ToString();
+
+                string address = localAddress.Replace('.', ',') + "," + (port >> 8) + "," + (port & 0xFF);
                 session.DataConnection = dataConnection;
                 session.Send(FtpCoreResource.PassiveEnter_227, address);
             }
