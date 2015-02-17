@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E10F5B1A-7357-4024-AC75-FFD8AA12EDEF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SuperSocket.Ftp.FtpService</RootNamespace>
+    <AssemblyName>SuperSocket.Ftp.FtpService</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>http://localhost/GiantSoft.Ftp.FtpService/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SuperSocket.Common, Version=1.5.0.0, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference\SuperSocket\Net40\Debug\SuperSocket.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.SocketBase, Version=1.5.0.0, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference\SuperSocket\Net40\Debug\SuperSocket.SocketBase.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AuthenticationResult.cs" />
+    <Compile Include="Command\ABOR.cs" />
+    <Compile Include="Command\ACCT.cs" />
+    <Compile Include="Command\APPE.cs" />
+    <Compile Include="Command\AUTH.cs" />
+    <Compile Include="Command\CDUP.cs" />
+    <Compile Include="Command\CWD.cs" />
+    <Compile Include="Command\DELE.cs" />
+    <Compile Include="Command\FEAT.cs" />
+    <Compile Include="Command\FtpCommandBase.cs" />
+    <Compile Include="Command\HELP.cs" />
+    <Compile Include="Command\LIST.cs" />
+    <Compile Include="Command\MDTM.cs" />
+    <Compile Include="Command\MKD.cs" />
+    <Compile Include="Command\MLSD.cs" />
+    <Compile Include="Command\MODE.cs" />
+    <Compile Include="Command\NLST.cs" />
+    <Compile Include="Command\NOOP.cs" />
+    <Compile Include="Command\PASS.cs" />
+    <Compile Include="Command\PASV.cs" />
+    <Compile Include="Command\PBSZ.cs" />
+    <Compile Include="Command\PORT.cs" />
+    <Compile Include="Command\PROT.cs" />
+    <Compile Include="Command\PWD.cs" />
+    <Compile Include="Command\QUIT.cs" />
+    <Compile Include="Command\REIN.cs" />
+    <Compile Include="Command\REST.cs" />
+    <Compile Include="Command\RETR.cs" />
+    <Compile Include="Command\RMD.cs" />
+    <Compile Include="Command\RNFR.cs" />
+    <Compile Include="Command\RNTO.cs" />
+    <Compile Include="Command\SITE.cs" />
+    <Compile Include="Command\SIZE.cs" />
+    <Compile Include="Command\STAT.cs" />
+    <Compile Include="Command\STOR.cs" />
+    <Compile Include="Command\STOU.cs" />
+    <Compile Include="Command\STRU.cs" />
+    <Compile Include="Command\SYST.cs" />
+    <Compile Include="Command\TYPE.cs" />
+    <Compile Include="Command\USER.cs" />
+    <Compile Include="CreateUserResult.cs" />
+    <Compile Include="DataConnection.cs" />
+    <Compile Include="FtpContext.cs" />
+    <Compile Include="FtpPath.cs" />
+    <Compile Include="FtpServer.cs" />
+    <Compile Include="FtpServiceProviderBase.cs" />
+    <Compile Include="FtpSession.cs" />
+    <Compile Include="FtpStatus.cs" />
+    <Compile Include="FtpUser.cs" />
+    <Compile Include="Membership\Anonymous.cs" />
+    <Compile Include="Membership\PasswordFormat.cs" />
+    <Compile Include="Membership\WindowsDomainMembership.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="FtpCoreResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FtpCoreResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Storage\ItemType.cs" />
+    <Compile Include="Storage\ListItem.cs" />
+    <Compile Include="Storage\OutOfStorageException.cs" />
+    <Compile Include="Storage\RenameResult.cs" />
+    <Compile Include="Storage\StoreOption.cs" />
+    <Compile Include="StoreException.cs" />
+    <Compile Include="SystemDirectoryException.cs" />
+    <Compile Include="TransferType.cs" />
+    <Compile Include="XmlFtpProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FtpCoreResource.resx">
+      <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FtpCoreResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FtpCommon\FtpCommon.Net45.csproj">
+      <Project>{81BC81F9-9A57-449E-AF6E-FAECA8740701}</Project>
+      <Name>FtpCommon.Net45</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
