@@ -25,11 +25,6 @@ namespace SuperSocket.Ftp.FtpService
 
         public string UserName { get; set; }
 
-        public long UserID
-        {
-            get { return m_User.UserID; }
-        }
-
         public Encoding Charset { get; set; }
 
         private long m_Offset = 0;

@@ -15,7 +15,6 @@ namespace SuperSocket.Ftp.FtpService.Membership
         public Anonymous()
         {
             this.UserName = "anonymous";
-            this.UserID = 0;
             this.MaxConnections = 2;
         }
     }

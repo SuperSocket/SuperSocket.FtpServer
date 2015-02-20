@@ -184,7 +184,7 @@ namespace SuperSocket.Ftp.FtpService
 
         private object m_SyncRoot = new object();
 
-        private Dictionary<long, FtpUser> m_DictOnlineUser = new Dictionary<long, FtpUser>();
+        private Dictionary<string, FtpUser> m_DictOnlineUser = new Dictionary<string, FtpUser>(StringComparer.OrdinalIgnoreCase);
 
         public bool Logon(FtpContext context, FtpUser user)
         {
@@ -192,7 +192,7 @@ namespace SuperSocket.Ftp.FtpService
 
             lock (m_SyncRoot)
             {
-                m_DictOnlineUser.TryGetValue(user.UserID, out onlineUser);
+                m_DictOnlineUser.TryGetValue(user.UserName, out onlineUser);
             }
 
             if (onlineUser != null)
@@ -207,7 +207,7 @@ namespace SuperSocket.Ftp.FtpService
 
                 lock (m_SyncRoot)
                 {
-                    m_DictOnlineUser[user.UserID] = user;
+                    m_DictOnlineUser[user.UserName] = user;
                 }
 
                 return true;
@@ -220,7 +220,7 @@ namespace SuperSocket.Ftp.FtpService
 
             lock (m_SyncRoot)
             {
-                m_DictOnlineUser.TryGetValue(user.UserID, out onlineUser);
+                m_DictOnlineUser.TryGetValue(user.UserName, out onlineUser);
             }
 
             if (onlineUser != null)
@@ -229,7 +229,7 @@ namespace SuperSocket.Ftp.FtpService
                 {
                     lock (m_SyncRoot)
                     {
-                        m_DictOnlineUser.Remove(user.UserID);
+                        m_DictOnlineUser.Remove(user.UserName);
                     }
 
                     FtpServiceProvider.UpdateUsedSpaceForUser(user);
