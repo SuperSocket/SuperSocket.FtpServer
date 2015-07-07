@@ -35,7 +35,8 @@ SuperSocket FTP Server is a FTP server written in C# language 100% base on **[Su
 		                    serverType="SuperSocket.Ftp.FtpService.FtpServer, SuperSocket.Ftp.FtpService"
 		                    ip="Any" port="21"
 		                    maxConnectionNumber="100"
-		                    dataPort="4000-4004">
+		                    dataPort="4000-4004"
+                            userSetting="Config\FtpUser.xml">
 		            </server>
 		        </servers>
 		    </superSocket>
