@@ -30,13 +30,16 @@ namespace SuperSocket.Ftp.FtpService
             if (!base.Init(server, config))
                 return false;
 
-            var userSettingFile = config.Options.GetValue("userSetting");
+            var userSettingFile = config.Options.GetValue("userSetting");            
 
             if (string.IsNullOrEmpty(userSettingFile))
             {
                 server.Logger.Error("No user setting file was not defined!");
                 return false;
             }
+
+            if (!Path.IsPathRooted(userSettingFile))
+                userSettingFile = server.GetFilePath(userSettingFile);
 
             if (!File.Exists(userSettingFile))
             {
