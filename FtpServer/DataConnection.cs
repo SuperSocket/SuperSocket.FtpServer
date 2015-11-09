@@ -19,8 +19,6 @@ namespace SuperSocket.Ftp.FtpService
 {
     class DataConnection
     {
-        private static Random m_Random = new Random();
-
         private string m_Address = string.Empty;
 
         public string Address
