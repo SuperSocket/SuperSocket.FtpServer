@@ -1,5 +1,5 @@
-# SuperSocket.FtpServer
-
+# SuperSocket.FtpServer [![Build Status](https://travis-ci.org/kerryjiang/SuperSocket.FtpServer.svg?branch=master)](https://travis-ci.org/kerryjiang/SuperSocket.FtpServer)
+=====
 
 SuperSocket FTP Server is a FTP server written in C# language 100% base on **[SuperSocket](http://docs.supersocket.net/ "SuperSocket")**.
 
