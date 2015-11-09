@@ -1,2 +1,4 @@
 language: csharp
-solution: SuperSocket.Ftp.sln
+script:
+   - xbuild SuperSocket.Ftp.sln /property:DefineConstants=MONO
+   - xbuild SuperSocket.Ftp.Net45.sln /property:DefineConstants=MONO

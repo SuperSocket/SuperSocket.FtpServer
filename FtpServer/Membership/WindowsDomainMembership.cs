@@ -6,6 +6,7 @@ using System.DirectoryServices.AccountManagement;
 
 namespace SuperSocket.Ftp.FtpService.Membership
 {
+#if !MONO
     public class WindowsDomainMembership
     {
         public bool ValidateUser(string username, string password)
@@ -17,4 +18,5 @@ namespace SuperSocket.Ftp.FtpService.Membership
             }
         }
     }
+#endif
 }
