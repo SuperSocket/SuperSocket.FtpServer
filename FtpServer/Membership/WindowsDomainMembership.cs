@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.DirectoryServices.AccountManagement;
-
-namespace SuperSocket.Ftp.FtpService.Membership
+﻿namespace SuperSocket.Ftp.FtpService.Membership
 {
 #if !MONO
+
+    using System.DirectoryServices.AccountManagement;
+
     public class WindowsDomainMembership
     {
         public bool ValidateUser(string username, string password)
